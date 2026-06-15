@@ -1,0 +1,62 @@
+[project]
+name = "scientia-core"
+version = "0.1.0"
+description = "Scientia Omnibus -- a knowledge base viewer"
+authors = [
+    { name = "MarkLevkovich", email = "levmarkpost@gmail.com" }
+]
+license = { text = "MIT" }
+requires-python = ">=3.12"
+homepage = "https://github.com/Scientia-Omnibus/scientia-core"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Other Audience",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows :: Windows 10",
+    "Operating System :: Microsoft :: Windows :: Windows 11",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Documentation"
+]
+
+dependencies = [
+    "ruff>=0.15.17",
+    "textual==0.53.1",
+    "typing-extensions>=4.5",
+    "xdg>=6,<7",
+]
+
+[project.urls]
+Homepage = "https://github.com/Scientia-Omnibus/scientia-core"
+
+[project.scripts]
+scientia-core = "src.app.app:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.uv]
+package = true
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+exclude = [
+    ".git",
+    ".venv",
+    "build",
+    "dist",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
