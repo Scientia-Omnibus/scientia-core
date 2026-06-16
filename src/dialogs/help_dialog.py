@@ -12,47 +12,87 @@ from src import __version__
 HELP: Final[str] = f"""\
 # Scientia Omnibus v{__version__} Help
 
-Welcome to Scientia Omnibus Help!
+Scientia Omnibus — a terminal program for viewing your education storage.
 
-## Navigation keys
+## Interface
 
-| Key | Command |
+The application consists of three main zones:
+
+- **Omnibox** (top bar) — a command line, like a browser address bar.
+- **Navigation** (sidebar) — four tabs: Contents, Local, Bookmarks, History.
+- **Viewer** (main area) — displays documents.
+
+The sidebar can be hidden/shown (`Ctrl+N`), tabs can be switched,
+or the panel can be moved to the opposite side (`\\`).
+
+## Global Keys
+
+| Key | Action |
 | -- | -- |
-| `/` | Focus the address bar |
-| `Escape` | Return to address bar / clear address bar / quit |
-| `Ctrl+n` | Show/hide the navigation |
-| `Ctrl+b` | Show the bookmarks |
-| `Ctrl+l` | Show the local file browser |
-| `Ctrl+t` | Show the table of contents |
-| `Ctrl+y` | Show the history |
-| `Ctrl+left` | Go backward in history |
-| `Ctrl+right` | Go forward in history |
-
-## General keys
-
-| Key | Command |
-| -- | -- |
-| `Ctrl+d` | Add the current document to the bookmarks |
-| `Ctrl+r` | Reload the current document |
-| `Ctrl+q` | Quit the application |
+| `/` or `:` | Focus on omnibox (command line) |
+| `Escape` | Return to omnibox / clear omnibox / exit |
+| `Ctrl+N` | Show/hide navigation sidebar |
+| `Ctrl+B` | Show bookmarks |
+| `Ctrl+L` | Show local files |
+| `Ctrl+T` | Show document table of contents |
+| `Ctrl+Y` | Show history |
+| `Ctrl+Left` | Go back in viewing history |
+| `Ctrl+Right` | Go forward in viewing history |
+| `Ctrl+D` | Add current document to bookmarks |
+| `Ctrl+R` | Reload current document |
+| `Ctrl+Q` | Quit application |
 | `F1` | This help |
-| `F2` | Details about Scientia Omnibus |
+| `F2` | About |
 | `F10` | Toggle dark/light theme |
+
+## Navigation Panel
+
+| Key | Action |
+| -- | -- |
+| `,` / `a` / `h` / `Ctrl+Left` / `Shift+Left` | Previous tab |
+| `.` / `d` / `l` / `Ctrl+Right` / `Shift+Right` | Next tab |
+| `\\` | Move panel left/right |
+
+## Document Viewer
+
+When focus is in the viewer:
+
+| Key | Action |
+| -- | -- |
+| `w` / `k` | Scroll up |
+| `s` / `j` | Scroll down |
+| `Space` | Page down |
+| `b` | Page up |
+
+## Bookmarks
+
+| Key | Action |
+| -- | -- |
+| `Delete` | Delete bookmark |
+| `r` | Rename bookmark |
+
+## History
+
+| Key | Action |
+| -- | -- |
+| `Delete` | Delete history entry |
+| `Backspace` | Clear entire history |
 
 ## Commands
 
-Press `/` or click the address bar, then enter any of the following commands:
+Press `/` or click the omnibox, then type one of the commands:
 
-| Command | Aliases | Arguments | Command |
-| -- | -- | -- | -- |
-| `about` | `a` | | Show details about the application |
-| `bookmarks` | `b`, `bm` | | Show the bookmarks list |
-| `chdir` | `cd` | `<dir>` | Switch the local file browser to a new directory |
-| `contents` | `c`, `toc` | | Show the table of contents for the document |
-| `help` | `?` | | Show this document |
-| `history` | `h` | | Show the history |
-| `local` | `l` | | Show the local file browser |
-| `quit` | `q` | | Quit the viewer |
+| Command | Aliases | Description |
+| -- | -- | -- |
+| `about` | `a` | Show application information |
+| `bookmarks` | `b`, `bm` | Show bookmarks list |
+| `contents` | `c`, `toc` | Show document table of contents |
+| `help` | `?` | Show this help |
+| `history` | `h` | Show history |
+| `local` | `l` | Show local files |
+| `quit` | `q` | Quit the program |
+
+You can also simply type a path to a `.md` file to open it.
 """
 
 
