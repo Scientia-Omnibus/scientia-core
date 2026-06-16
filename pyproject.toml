@@ -26,7 +26,7 @@ classifiers = [
 
 dependencies = [
     "ruff>=0.15.17",
-    "textual==0.53.1",
+    "textual[syntax]>=8.2.7",
     "typing-extensions>=4.5",
     "xdg>=6,<7",
 ]

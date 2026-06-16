@@ -27,7 +27,7 @@ class Main(Screen[None]):
     }
 
     .focusable:focus {
-        border: heavy $accent !important;
+        border: heavy $accent;
     }
 
 
@@ -37,7 +37,7 @@ class Main(Screen[None]):
     }
 
     Screen Tabs:focus {
-        border: heavy $accent !important;
+        border: heavy $accent;
         height: 5;
     }
 
@@ -47,7 +47,7 @@ class Main(Screen[None]):
     }
 
     Screen TabbedContent TabPane:focus-within {
-        border: heavy $accent !important;
+        border: heavy $accent;
     }
     """
 
