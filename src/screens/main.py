@@ -13,6 +13,7 @@ from textual.widgets import Footer, Markdown
 
 from src import __version__
 from src.data import load_config, load_history, save_config, save_history
+from src.data.data_directory import data_directory
 from src.dialogs import ErrorDialog, HelpDialog, InformationDialog, InputDialog
 from src.utility import maybe_markdown
 from src.widgets import Navigation, Omnibox, Viewer
@@ -68,9 +69,9 @@ class Main(Screen[None]):
         Binding("f10", "toggle_theme", "", show=False),
     ]
 
-    def __init__(self, initial_location: str | None = None) -> None:
+    def __init__(self) -> None:
         super().__init__()
-        self._initial_location = initial_location
+        self._initial_location = data_directory()
 
     def compose(self) -> ComposeResult:
         yield Omnibox(classes="focusable")
@@ -98,12 +99,8 @@ class Main(Screen[None]):
         if history := load_history():
             self.query_one(Viewer).load_history(history)
 
-        if self._initial_location is None and history:
-            self.query_one(Viewer).visit(history[-1], remember=False)
-            self.query_one(Omnibox).value = str(history[-1])
-        elif self._initial_location is not None:
-            (omnibox := self.query_one(Omnibox)).value = self._initial_location
-            await omnibox.action_submit()
+        (omnibox := self.query_one(Omnibox)).value = str(self._initial_location)
+        await omnibox.action_submit()
 
     def on_navigation_hidden(self) -> None:
         self.query_one(Viewer).focus()
