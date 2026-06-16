@@ -24,6 +24,9 @@ PLACEHOLDER = f"""\
 # {APPLICATION_TITLE} {__version__}
 
 Welcome to {APPLICATION_TITLE}!
+
+
+here will be guide how to use this app and download DB's from gh repos
 """
 
 

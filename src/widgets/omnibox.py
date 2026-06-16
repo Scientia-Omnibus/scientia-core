@@ -3,7 +3,6 @@ from __future__ import annotations
 from pathlib import Path
 
 from textual.message import Message
-from textual.reactive import var
 from textual.widgets import Input
 
 
@@ -20,12 +19,8 @@ class Omnibox(Input):
     }
     """
 
-    visiting: var[str] = var("")
-
-    def watch_visiting(self) -> None:
-        self.placeholder = self.visiting or "Enter a location or command"
-        if self.visiting:
-            self.value = self.visiting
+    def on_mount(self) -> None:
+        self.placeholder = "Search file, or enter a command... (type `help` for more)"
 
     _ALIASES: dict[str, str] = {
         "a": "about",
@@ -69,24 +64,10 @@ class Omnibox(Input):
             self.target = target
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
-
         submitted = self.value.strip()
         self.value = ""
-
-        if (path := Path(submitted).expanduser().resolve()).exists():
-            if path.is_file():
-                self.post_message(self.LocalViewCommand(path))
-                self.value = str(path)
-            elif path.is_dir():
-                self.post_message(self.LocalChdirCommand(path))
-            else:
-                return
-        elif self._is_command(command := submitted.lower()):
+        if self._is_command(command := submitted.lower()):
             self._execute_command(command)
-        else:
-            self.post_message(self.LocalViewCommand(Path(submitted)))
-            self.value = submitted
-
         event.stop()
 
     class ContentsCommand(Message):

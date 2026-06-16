@@ -15,7 +15,7 @@ from src import __version__
 from src.data import load_config, load_history, save_config, save_history
 from src.data.data_directory import data_directory
 from src.dialogs import ErrorDialog, HelpDialog, InformationDialog, InputDialog
-from src.utility import maybe_markdown
+from src.utils import maybe_markdown
 from src.widgets import Navigation, Omnibox, Viewer
 from src.widgets.navigation_panes import Bookmarks, History, LocalFiles
 
@@ -99,8 +99,7 @@ class Main(Screen[None]):
         if history := load_history():
             self.query_one(Viewer).load_history(history)
 
-        (omnibox := self.query_one(Omnibox)).value = str(self._initial_location)
-        await omnibox.action_submit()
+        self.query_one(Navigation).jump_to_local_files(self._initial_location)
 
     def on_navigation_hidden(self) -> None:
         self.query_one(Viewer).focus()
@@ -159,9 +158,6 @@ class Main(Screen[None]):
         self.visit(event.bookmark.location)
 
     def on_viewer_location_changed(self, event: Viewer.LocationChanged) -> None:
-        self.query_one(Omnibox).visiting = (
-            str(event.viewer.location) if event.viewer.location is not None else ""
-        )
         self.query_one(Viewer).focus()
 
     def on_viewer_history_updated(self, event: Viewer.HistoryUpdated) -> None:
