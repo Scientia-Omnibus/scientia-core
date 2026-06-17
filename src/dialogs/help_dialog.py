@@ -31,6 +31,7 @@ or the panel can be moved to the opposite side (`\\`).
 | -- | -- |
 | `/` or `:` | Focus on omnibox (command line) |
 | `Escape` | Return to omnibox / clear omnibox / exit |
+| `Ctrl+O` | Change the search directory |
 | `Ctrl+N` | Show/hide navigation sidebar |
 | `Ctrl+B` | Show bookmarks |
 | `Ctrl+L` | Show local files |

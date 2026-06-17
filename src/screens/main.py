@@ -67,6 +67,7 @@ class Main(Screen[None]):
         Binding("ctrl+n", "navigation", "Navigation"),
         Binding("ctrl+q", "app.quit", "Quit"),
         Binding("f10", "toggle_theme", "", show=False),
+        Binding("ctrl+o", "change_knowledge_dir", "Change Directory"),
     ]
 
     def __init__(self) -> None:
@@ -274,3 +275,6 @@ class Main(Screen[None]):
 
     def action_reload(self) -> None:
         self.query_one(Viewer).reload()
+
+    def action_change_knowledge_dir(self) -> None:
+        self.query_one(Navigation).change_knowledge_dir()

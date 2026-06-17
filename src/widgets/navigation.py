@@ -1,5 +1,3 @@
-"""Provides the navigation panel widget."""
-
 from __future__ import annotations
 
 from pathlib import Path
@@ -12,15 +10,17 @@ from textual.reactive import var
 from textual.widgets import TabbedContent, Tabs
 from typing_extensions import Self
 
+from src.dialogs.directory_picker import DirectoryPicker
 from src.data import load_config, save_config
 from src.widgets.navigation_panes.bookmarks import Bookmarks
 from src.widgets.navigation_panes.history import History
 from src.widgets.navigation_panes.local_files import LocalFiles
 from src.widgets.navigation_panes.navigation_pane import NavigationPane
 from src.widgets.navigation_panes.table_of_contents import TableOfContents
+from src.widgets.omnibox import Omnibox
 
 
-class Navigation(Vertical, can_focus=False, can_focus_children=True):
+class Navigation(Vertical, can_focus=True, can_focus_children=True):
     """A navigation panel widget."""
 
     DEFAULT_CSS = """
@@ -194,3 +194,10 @@ class Navigation(Vertical, can_focus=False, can_focus_children=True):
             self.query_one(
                 f"NavigationPane#{active}", NavigationPane
             ).set_focus_within()
+
+    def change_knowledge_dir(self) -> None:
+        self.app.push_screen(DirectoryPicker(), self._on_dir_selected)
+
+    def _on_dir_selected(self, target: Path | None) -> None:
+        if target:
+            self.post_message(Omnibox.LocalChdirCommand(target))

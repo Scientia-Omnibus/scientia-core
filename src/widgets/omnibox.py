@@ -111,8 +111,3 @@ class Omnibox(Input):
 
     def command_help(self, _: str) -> None:
         self.post_message(self.HelpCommand())
-
-    # def command_chdir(self, target: str) -> None:
-    #     self.post_message(
-    #         self.LocalChdirCommand(Path(target or "~").expanduser().resolve())
-    #     )
