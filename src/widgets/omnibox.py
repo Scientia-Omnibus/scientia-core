@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+from rapidfuzz import fuzz, process
 from pathlib import Path
 
+from rapidfuzz.fuzz_py import WRatio
 from textual.message import Message
 from textual.widgets import Input
+
+from src.data.data_directory import data_directory
 
 
 class Omnibox(Input):
@@ -21,13 +25,14 @@ class Omnibox(Input):
 
     def on_mount(self) -> None:
         self.placeholder = "Search file, or enter a command... (type `help` for more)"
+        self.search_files = list(Path(data_directory()).rglob("*.md"))
+        self.file_stems = [p.stem for p in self.search_files]
 
     _ALIASES: dict[str, str] = {
         "a": "about",
         "b": "bookmarks",
         "bm": "bookmarks",
         "c": "contents",
-        "cd": "chdir",
         "h": "history",
         "l": "local",
         "toc": "contents",
@@ -68,6 +73,8 @@ class Omnibox(Input):
         self.value = ""
         if self._is_command(command := submitted.lower()):
             self._execute_command(command)
+        elif results := self._search_files(submitted, limit=1):
+            self.post_message(self.LocalViewCommand(results[0][1]))
         event.stop()
 
     class ContentsCommand(Message):
@@ -111,3 +118,11 @@ class Omnibox(Input):
 
     def command_help(self, _: str) -> None:
         self.post_message(self.HelpCommand())
+
+    def _search_files(self, query: str, limit: int = 10) -> list:
+        if not query.strip():
+            return []
+        extracted = process.extract(
+            query, self.file_stems, scorer=fuzz.WRatio, limit=limit, processor=None
+        )
+        return [(score, self.search_files[idx]) for _, score, idx in extracted]
