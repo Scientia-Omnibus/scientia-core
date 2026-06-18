@@ -79,6 +79,16 @@ When focus is in the viewer:
 | `Delete` | Delete history entry |
 | `Backspace` | Clear entire history |
 
+## Search
+
+As you type in the omnibox, fuzzy search automatically scans the knowledge directory
+for matching `.md` files. Results appear in a dropdown list below the omnibox.
+
+- `Down` arrow — move focus to the results list.
+- `Up` arrow (at the top of results) — return focus to the omnibox.
+- `Enter` — open the selected file in the viewer.
+- `Escape` — close the results dropdown.
+
 ## Commands
 
 Press `/` or click the omnibox, then type one of the commands:
@@ -92,8 +102,6 @@ Press `/` or click the omnibox, then type one of the commands:
 | `history` | `h` | Show history |
 | `local` | `l` | Show local files |
 | `quit` | `q` | Quit the program |
-
-You can also simply type a path to a `.md` file to open it.
 """
 
 

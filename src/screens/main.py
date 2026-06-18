@@ -49,13 +49,17 @@ class Main(Screen[None]):
         border: heavy $accent;
     }
     ListView#omnibox-results {
-    height: auto;
-    max-height: 15;
-    border: tall $accent;
-    display: none;
+        height: auto;
+        max-height: 15;
+        border: tall $accent;
+        display: none;
     }
     ListView#omnibox-results.has-results {
         display: block;
+    }
+    ListView#omnibox-results > ListItem {
+        border-bottom: solid $primary;
+        padding: 0 2;
     }
     """
 
@@ -306,7 +310,7 @@ class Main(Screen[None]):
             self._omnibox_results.append(path)
             results.append(
                 ListItem(
-                    Label(f"{path.stem}"), Label(f"{score}%  {path.parent.name or ''}")
+                    Label(f"{path.stem}"), Label(f"lang: {path.parent.name or ''}")
                 )
             )
         if results.children:
