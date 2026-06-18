@@ -7,10 +7,9 @@ from webbrowser import open as open_url
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal
-from textual.events import Paste
+from textual.events import Key, Paste
 from textual.screen import Screen
-from textual.widgets import Footer, Markdown
-
+from textual.widgets import Input, ListView, ListItem, Label, Footer, Markdown
 from src import __version__
 from src.data import load_config, load_history, save_config, save_history
 from src.data.data_directory import data_directory
@@ -49,6 +48,15 @@ class Main(Screen[None]):
     Screen TabbedContent TabPane:focus-within {
         border: heavy $accent;
     }
+    ListView#omnibox-results {
+    height: auto;
+    max-height: 15;
+    border: tall $accent;
+    display: none;
+    }
+    ListView#omnibox-results.has-results {
+        display: block;
+    }
     """
 
     BINDINGS = [
@@ -73,9 +81,11 @@ class Main(Screen[None]):
     def __init__(self) -> None:
         super().__init__()
         self._initial_location = data_directory()
+        self.omnibox_results = []
 
     def compose(self) -> ComposeResult:
-        yield Omnibox(classes="focusable")
+        yield Omnibox(id="omnibox-input", classes="focusable")
+        yield ListView(id="omnibox-results")
         with Horizontal():
             yield Navigation()
             yield Viewer(classes="focusable")
@@ -204,7 +214,11 @@ class Main(Screen[None]):
         self.query_one(Navigation).toggle()
 
     def action_escape(self) -> None:
-        if (omnibox := self.query_one(Omnibox)).has_focus:
+        results = self.query_one("#omnibox-results", ListView)
+        if results.has_class("has-results"):
+            results.remove_class("has-results")
+            self.query_one(Omnibox).focus()
+        elif (omnibox := self.query_one(Omnibox)).has_focus:
             if omnibox.value:
                 omnibox.value = ""
             else:
@@ -278,3 +292,47 @@ class Main(Screen[None]):
 
     def action_change_knowledge_dir(self) -> None:
         self.query_one(Navigation).change_knowledge_dir()
+
+    def on_input_changed(self, event: Input.Changed) -> None:
+        query = event.value.strip()
+        results = self.query_one("#omnibox-results", ListView)
+        results.clear()
+        self._omnibox_results = []
+        if not query:
+            results.remove_class("has-results")
+            return
+        omnibox = self.query_one(Omnibox)
+        for score, path in omnibox._search_files(query):
+            self._omnibox_results.append(path)
+            results.append(
+                ListItem(
+                    Label(f"{path.stem}"), Label(f"{score}%  {path.parent.name or ''}")
+                )
+            )
+        if results.children:
+            results.add_class("has-results")
+            results.index = 0
+        else:
+            results.remove_class("has-results")
+
+    def on_input_submitted(self, event: Input.Submitted) -> None:
+        self.query_one("#omnibox-results", ListView).remove_class("has-results")
+
+    def on_list_view_selected(self, event: ListView.Selected) -> None:
+        results = self.query_one("#omnibox-results", ListView)
+        results.remove_class("has-results")
+        if 0 <= results.index < len(self._omnibox_results):
+            self.visit(self._omnibox_results[results.index])
+        self.query_one(Omnibox).value = ""
+        self.query_one(Omnibox).focus()
+
+    def on_omnibox_focus_results(self) -> None:
+        results = self.query_one("#omnibox-results", ListView)
+        if results.has_class("has-results"):
+            results.focus()
+
+    def on_key(self, event: Key) -> None:
+        results = self.query_one("#omnibox-results", ListView)
+        if event.key == "up" and results.has_focus and results.index == 0:
+            self.query_one(Omnibox).focus()
+            event.stop()

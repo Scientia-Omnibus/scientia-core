@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from rapidfuzz import fuzz, process
 from pathlib import Path
 
-from rapidfuzz.fuzz_py import WRatio
+from rapidfuzz import fuzz, process
+from textual.events import Key
 from textual.message import Message
 from textual.widgets import Input
 
@@ -68,14 +68,26 @@ class Omnibox(Input):
             super().__init__()
             self.target = target
 
+    class FocusResults(Message):
+        pass
+
     def on_input_submitted(self, event: Input.Submitted) -> None:
         submitted = self.value.strip()
-        self.value = ""
         if self._is_command(command := submitted.lower()):
+            self.value = ""
             self._execute_command(command)
-        elif results := self._search_files(submitted, limit=1):
-            self.post_message(self.LocalViewCommand(results[0][1]))
-        event.stop()
+            event.stop()
+        else:
+            self.value = submitted
+
+    def on_key(self, event: Key) -> None:
+        if event.key == "down":
+            self.post_message(self.FocusResults())
+            event.stop()
+        elif event.key == "escape":
+            if self.value:
+                self.value = ""
+                event.stop()
 
     class ContentsCommand(Message):
         pass
