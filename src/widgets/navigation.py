@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import git
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Vertical
@@ -10,6 +11,9 @@ from textual.reactive import var
 from textual.widgets import TabbedContent, Tabs
 from typing_extensions import Self
 
+from src.dialogs import ErrorDialog
+from src.dialogs.knowledge_sync import KnowledgeSync
+from src.data.data_directory import data_directory
 from src.dialogs.directory_picker import DirectoryPicker
 from src.data import load_config, save_config
 from src.widgets.navigation_panes.bookmarks import Bookmarks
@@ -198,6 +202,26 @@ class Navigation(Vertical, can_focus=True, can_focus_children=True):
     def change_knowledge_dir(self) -> None:
         self.app.push_screen(DirectoryPicker(), self._on_dir_selected)
 
+    def updated_knowledge_base(self) -> None:
+        self.app.push_screen(KnowledgeSync(), self._sync_knowledge_base)
+
     def _on_dir_selected(self, target: Path | None) -> None:
         if target:
             self.post_message(Omnibox.LocalChdirCommand(target))
+
+    def _sync_knowledge_base(self, repo_name: str) -> None:
+        repo_path = f"https://github.com/Scientia-Omnibus/{repo_name}"
+        target_path = data_directory() / repo_name
+        try:
+            if target_path.exists():
+                repo = git.Repo(target_path)
+                repo.remotes.origin.pull("main")
+            else:
+                git.Repo.clone_from(repo_path, target_path)
+        except Exception as e:
+            self.app.push_screen(
+                ErrorDialog(
+                    "Oops...",
+                    "error while syncing repos",
+                )
+            )
