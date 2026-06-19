@@ -222,6 +222,8 @@ class Navigation(Vertical, can_focus=True, can_focus_children=True):
 
             else:
                 git.Repo.clone_from(repo_path, target_path)
+            # update tree
+            self.post_message(Omnibox.LocalChdirCommand(data_directory()))
         except Exception as e:
             self.app.push_screen(
                 ErrorDialog(
