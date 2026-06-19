@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 from textual import on
 from textual.app import ComposeResult
 from textual.binding import Binding
@@ -9,10 +7,8 @@ from textual.containers import Horizontal, Vertical
 from textual.screen import ModalScreen
 from textual.widgets import Button, Label, OptionList
 
-from src.data.data_directory import data_directory
 
-
-class KnowledgeSync(ModalScreen[Path]):
+class KnowledgeSync(ModalScreen[str]):
     """A modal dialog for selecting a knowledge directory."""
 
     DEFAULT_CSS = """
@@ -80,5 +76,8 @@ class KnowledgeSync(ModalScreen[Path]):
 
     @on(Button.Pressed, "#ok")
     def accept_choice(self) -> None:
-        if self.query_one(OptionList).highlighted is not None:
-            self.dismiss(self.sciences[self.query_one(OptionList).highlighted])
+        option_list = self.query_one(OptionList)
+        if (
+            highlighted := option_list.highlighted
+        ) is not None and 0 <= highlighted < len(self.sciences):
+            self.dismiss(self.sciences[highlighted])

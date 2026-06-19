@@ -22,6 +22,7 @@ from src.widgets.navigation_panes.local_files import LocalFiles
 from src.widgets.navigation_panes.navigation_pane import NavigationPane
 from src.widgets.navigation_panes.table_of_contents import TableOfContents
 from src.widgets.omnibox import Omnibox
+from src.widgets.navigation_panes.local_files import FilteredDirectoryTree
 
 
 class Navigation(Vertical, can_focus=True, can_focus_children=True):
@@ -202,7 +203,7 @@ class Navigation(Vertical, can_focus=True, can_focus_children=True):
     def change_knowledge_dir(self) -> None:
         self.app.push_screen(DirectoryPicker(), self._on_dir_selected)
 
-    def updated_knowledge_base(self) -> None:
+    def update_knowledge_base(self) -> None:
         self.app.push_screen(KnowledgeSync(), self._sync_knowledge_base)
 
     def _on_dir_selected(self, target: Path | None) -> None:
@@ -215,7 +216,10 @@ class Navigation(Vertical, can_focus=True, can_focus_children=True):
         try:
             if target_path.exists():
                 repo = git.Repo(target_path)
-                repo.remotes.origin.pull("main")
+                repo.remotes.origin.fetch("main")
+                repo.git.reset("--hard", "origin/main")
+                repo.git.clean("-fd")
+
             else:
                 git.Repo.clone_from(repo_path, target_path)
         except Exception as e:

@@ -299,7 +299,7 @@ class Main(Screen[None]):
         self.query_one(Navigation).change_knowledge_dir()
 
     def action_update_knowledge_data(self) -> None:
-        self.query_one(Navigation).updated_knowledge_base()
+        self.query_one(Navigation).update_knowledge_base()
 
     def on_input_changed(self, event: Input.Changed) -> None:
         query = event.value.strip()
