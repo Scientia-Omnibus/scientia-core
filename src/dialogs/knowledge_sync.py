@@ -9,7 +9,7 @@ from textual.widgets import Button, Label, OptionList
 
 
 class KnowledgeSync(ModalScreen[str]):
-    """A modal dialog for selecting a knowledge directory."""
+    """A modal dialog for syncing knowledge base repositories."""
 
     DEFAULT_CSS = """
     KnowledgeSync {
@@ -51,16 +51,10 @@ class KnowledgeSync(ModalScreen[str]):
     BINDINGS = [
         Binding("escape", "app.pop_screen", "", show=False),
     ]
-    """Bindings for the dialog."""
 
     def __init__(self) -> None:
         super().__init__()
-        self.sciences = [
-            "humanities-sciences",
-            "social-sciences",
-            "natural-sciences",
-            "formal-sciences",
-        ]
+        self.sciences = ["formal-sciences"]
 
     def compose(self) -> ComposeResult:
         with Vertical():

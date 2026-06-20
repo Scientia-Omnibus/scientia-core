@@ -49,12 +49,10 @@ class InputDialog(ModalScreen[str]):
         padding-right: 1;
     }
     """
-    """The default styling for the input dialog."""
 
     BINDINGS = [
         Binding("escape", "app.pop_screen", "", show=False),
     ]
-    """Bindings for the dialog."""
 
     def __init__(self, prompt: str, initial: str | None = None) -> None:
         """Initialise the input dialog.
@@ -65,12 +63,9 @@ class InputDialog(ModalScreen[str]):
         """
         super().__init__()
         self._prompt = prompt
-        """The prompt to display for the input."""
         self._initial = initial
-        """The initial value to use for the input."""
 
     def compose(self) -> ComposeResult:
-        """Compose the child widgets."""
         with Vertical():
             with Vertical(id="input"):
                 yield Label(self._prompt)
@@ -80,17 +75,14 @@ class InputDialog(ModalScreen[str]):
                 yield Button("Cancel", id="cancel")
 
     def on_mount(self) -> None:
-        """Set up the dialog once the DOM is ready."""
         self.query_one(Input).focus()
 
     @on(Button.Pressed, "#cancel")
     def cancel_input(self) -> None:
-        """Cancel the input operation."""
         self.app.pop_screen()
 
     @on(Input.Submitted)
     @on(Button.Pressed, "#ok")
     def accept_input(self) -> None:
-        """Accept and return the input."""
         if value := self.query_one(Input).value.strip():
             self.dismiss(value)

@@ -51,12 +51,10 @@ class DirectoryPicker(ModalScreen[Path]):
         padding-right: 1;
     }
     """
-    """The default styling for the directory picker dialog."""
 
     BINDINGS = [
         Binding("escape", "app.pop_screen", "", show=False),
     ]
-    """Bindings for the dialog."""
 
     def __init__(self) -> None:
         super().__init__()

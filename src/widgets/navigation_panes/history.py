@@ -47,7 +47,7 @@ class History(NavigationPane):
 
     BINDINGS = [
         Binding("delete", "delete", "Delete the history item"),
-        Binding("backspace", "clear", "Clean the history"),
+        Binding("backspace", "clear", "Clear the history"),
     ]
 
     def __init__(self) -> None:

@@ -18,5 +18,4 @@ class ErrorDialog(TextDialog):
 
     @property
     def button_style(self) -> ButtonVariant:
-        """The style for the dialog's button."""
         return "error"

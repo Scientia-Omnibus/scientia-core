@@ -9,7 +9,8 @@ from textual.binding import Binding
 from textual.containers import Horizontal
 from textual.events import Key, Paste
 from textual.screen import Screen
-from textual.widgets import Input, ListView, ListItem, Label, Footer, Markdown
+from textual.widgets import Footer, Input, Label, ListItem, ListView, Markdown
+
 from src import __version__
 from src.data import load_config, load_history, save_config, save_history
 from src.data.data_directory import data_directory
@@ -64,9 +65,11 @@ class Main(Screen[None]):
     """
 
     BINDINGS = [
+        Binding("f1", "help", "Help"),
+        Binding("f2", "about", "About", show=False),
         Binding("/,:", "omnibox", "Omnibox", show=False),
         Binding("ctrl+b", "bookmarks", "", show=False),
-        Binding("ctrl+d", "bookmark_this", "", show=False),
+        Binding("ctrl+d", "bookmark_this", "Bookmark this file"),
         Binding("ctrl+l", "local_files", "", show=False),
         Binding("ctrl+left", "backward", "", show=False),
         Binding("ctrl+right", "forward", "", show=False),
@@ -74,8 +77,6 @@ class Main(Screen[None]):
         Binding("ctrl+t", "table_of_contents", "", show=False),
         Binding("ctrl+y", "history", "", show=False),
         Binding("escape", "escape", "", show=False),
-        Binding("f1", "help", "Help"),
-        Binding("f2", "about", "About"),
         Binding("ctrl+n", "navigation", "Navigation"),
         Binding("ctrl+q", "app.quit", "Quit"),
         Binding("f10", "toggle_theme", "", show=False),

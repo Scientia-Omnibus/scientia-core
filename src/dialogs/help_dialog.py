@@ -12,7 +12,7 @@ from src import __version__
 HELP: Final[str] = f"""\
 # Scientia Omnibus v{__version__} Help
 
-Scientia Omnibus — a terminal program for viewing your education storage.
+Scientia Omnibus — a terminal program for viewing your knowledge base.
 
 ## Interface
 

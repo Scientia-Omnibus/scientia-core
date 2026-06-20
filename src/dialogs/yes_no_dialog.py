@@ -53,16 +53,14 @@ class YesNoDialog(ModalScreen[bool]):
         padding-right: 1;
     }
     """
-    """The default CSS for the yes/no dialog."""
 
     BINDINGS = [
         Binding("left,up", "focus_previous", "", show=False),
         Binding("right,down", "focus_next", "", show=False),
         Binding("escape", "app.pop_screen", "", show=False),
     ]
-    """Bindings for the yes/no dialog."""
 
-    def __init__(  # pylint:disable=too-many-arguments
+    def __init__(
         self,
         title: str,
         question: str,
@@ -70,32 +68,14 @@ class YesNoDialog(ModalScreen[bool]):
         no_label: str = "No",
         yes_first: bool = True,
     ) -> None:
-        """Initialise the yes/no dialog.
-
-        Args:
-            requester: The widget requesting the input.
-            title: The title for the dialog.
-            question: The question to ask.
-            yes_label: The optional label for the yes button.
-            no_label: The optional label for the no button.
-            yes_first: Should the yes button come first?
-            cargo: Any cargo value for the question.
-            id: The ID for the dialog.
-        """
         super().__init__()
         self._title = title
-        """The title for the dialog."""
         self._question = question
-        """The question to ask the user."""
         self._aye = yes_label
-        """The label for the yes button."""
         self._naw = no_label
-        """The label for the no button."""
         self._aye_first = yes_first
-        """Should the positive button come first?"""
 
     def compose(self) -> ComposeResult:
-        """Compose the content of the dialog."""
         with Vertical():
             with Center():
                 yield Static(self._title, classes="spaced")
@@ -113,13 +93,7 @@ class YesNoDialog(ModalScreen[bool]):
                     yield aye
 
     def on_mount(self) -> None:
-        """Configure the dialog once the DOM is ready."""
         self.query(Button).first().focus()
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
-        """Handle a button being pressed on the dialog.
-
-        Args:
-            event: The event to handle.
-        """
         self.dismiss(event.button.id == "yes")

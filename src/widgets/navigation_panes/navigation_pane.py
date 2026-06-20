@@ -4,7 +4,7 @@ from typing_extensions import Self
 
 class NavigationPane(TabPane):
     def set_focus_within(self) -> None:
-        """Set the focus on the correct child within the navigation pane."""
+        pass
 
     def activate(self) -> Self:
         assert self.parent is not None
