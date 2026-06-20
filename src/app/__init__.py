@@ -1,6 +1,6 @@
 __author__ = "Scientia Omnibus"
 __email__ = "levmarkpost@gmail.com"
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 __licence__ = "MIT"
 
 from app.app import run
