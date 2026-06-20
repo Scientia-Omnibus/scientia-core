@@ -1,4 +1,4 @@
-from src.utils.type_tests import maybe_markdown
+from utils.type_tests import maybe_markdown
 
 __all__ = [
     "maybe_markdown",

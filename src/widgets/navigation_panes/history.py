@@ -10,8 +10,8 @@ from textual.message import Message
 from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 
-from src.dialogs import YesNoDialog
-from src.widgets.navigation_panes.navigation_pane import NavigationPane
+from dialogs import YesNoDialog
+from widgets.navigation_panes.navigation_pane import NavigationPane
 
 
 class Entry(Option):

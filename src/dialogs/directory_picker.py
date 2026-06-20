@@ -9,7 +9,7 @@ from textual.containers import Horizontal, Vertical
 from textual.screen import ModalScreen
 from textual.widgets import Button, Label, OptionList
 
-from src.data.data_directory import data_directory
+from data.data_directory import data_directory
 
 
 class DirectoryPicker(ModalScreen[Path]):

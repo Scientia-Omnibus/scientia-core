@@ -1,9 +1,9 @@
 """Provides the panes that go into the main navigation area."""
 
-from src.widgets.navigation_panes.bookmarks import Bookmarks
-from src.widgets.navigation_panes.history import History
-from src.widgets.navigation_panes.local_files import LocalFiles
-from src.widgets.navigation_panes.table_of_contents import TableOfContents
+from widgets.navigation_panes.bookmarks import Bookmarks
+from widgets.navigation_panes.history import History
+from widgets.navigation_panes.local_files import LocalFiles
+from widgets.navigation_panes.table_of_contents import TableOfContents
 
 __all__ = [
     "Bookmarks",

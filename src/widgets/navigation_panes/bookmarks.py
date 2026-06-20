@@ -10,9 +10,9 @@ from textual.message import Message
 from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 
-from src.data import Bookmark, load_bookmarks, save_bookmarks
-from src.dialogs import InputDialog, YesNoDialog
-from src.widgets.navigation_panes.navigation_pane import NavigationPane
+from data import Bookmark, load_bookmarks, save_bookmarks
+from dialogs import InputDialog, YesNoDialog
+from widgets.navigation_panes.navigation_pane import NavigationPane
 
 
 class Entry(Option):

@@ -2,7 +2,7 @@ from functools import singledispatch
 from pathlib import Path
 from typing import Any
 
-from src.data.config import load_config
+from data.config import load_config
 
 
 @singledispatch

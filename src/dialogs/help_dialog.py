@@ -7,7 +7,7 @@ from textual.screen import ModalScreen
 from textual.widgets import Button, Markdown
 from typing_extensions import Final
 
-from src import __version__
+from app import __version__
 
 HELP: Final[str] = f"""\
 # Scientia Omnibus v{__version__} Help

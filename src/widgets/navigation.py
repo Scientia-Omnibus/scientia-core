@@ -11,17 +11,17 @@ from textual.reactive import var
 from textual.widgets import TabbedContent, Tabs
 from typing_extensions import Self
 
-from src.data import load_config, save_config
-from src.data.data_directory import data_directory
-from src.dialogs import ErrorDialog
-from src.dialogs.directory_picker import DirectoryPicker
-from src.dialogs.knowledge_sync import KnowledgeSync
-from src.widgets.navigation_panes.bookmarks import Bookmarks
-from src.widgets.navigation_panes.history import History
-from src.widgets.navigation_panes.local_files import LocalFiles
-from src.widgets.navigation_panes.navigation_pane import NavigationPane
-from src.widgets.navigation_panes.table_of_contents import TableOfContents
-from src.widgets.omnibox import Omnibox
+from data import load_config, save_config
+from data.data_directory import data_directory
+from dialogs import ErrorDialog
+from dialogs.directory_picker import DirectoryPicker
+from dialogs.knowledge_sync import KnowledgeSync
+from widgets.navigation_panes.bookmarks import Bookmarks
+from widgets.navigation_panes.history import History
+from widgets.navigation_panes.local_files import LocalFiles
+from widgets.navigation_panes.navigation_pane import NavigationPane
+from widgets.navigation_panes.table_of_contents import TableOfContents
+from widgets.omnibox import Omnibox
 
 
 class Navigation(Vertical, can_focus=True, can_focus_children=True):

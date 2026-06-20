@@ -39,8 +39,11 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/Scientia-Omnibus/scientia-core"
 
+[tool.setuptools.packages.find]
+where = ["src"]
+
 [project.scripts]
-scientia-core = "src.app.app:run"
+scientia-core = "app.app:run"
 
 [tool.uv]
 package = true

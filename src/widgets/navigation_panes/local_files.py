@@ -7,8 +7,8 @@ from textual.app import ComposeResult
 from textual.message import Message
 from textual.widgets import DirectoryTree
 
-from src.utils import maybe_markdown
-from src.widgets.navigation_panes.navigation_pane import NavigationPane
+from utils import maybe_markdown
+from widgets.navigation_panes.navigation_pane import NavigationPane
 
 
 class FilteredDirectoryTree(DirectoryTree):

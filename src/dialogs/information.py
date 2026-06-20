@@ -1,4 +1,4 @@
-from src.dialogs.text_dialog import TextDialog
+from dialogs.text_dialog import TextDialog
 
 
 class InformationDialog(TextDialog):

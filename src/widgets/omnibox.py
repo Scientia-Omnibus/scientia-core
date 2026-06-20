@@ -7,7 +7,7 @@ from textual.events import Key
 from textual.message import Message
 from textual.widgets import Input
 
-from src.data.data_directory import data_directory
+from data.data_directory import data_directory
 
 
 class Omnibox(Input):

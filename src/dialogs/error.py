@@ -1,6 +1,6 @@
 from textual.widgets._button import ButtonVariant
 
-from src.dialogs.text_dialog import TextDialog
+from dialogs.text_dialog import TextDialog
 
 
 class ErrorDialog(TextDialog):

@@ -1,7 +1,7 @@
 from textual.app import App
 
-from src.data import load_config
-from src.screens import Main
+from data import load_config
+from screens import Main
 
 
 class ScientiaCore(App[None]):

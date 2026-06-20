@@ -11,13 +11,13 @@ from textual.events import Key, Paste
 from textual.screen import Screen
 from textual.widgets import Footer, Input, Label, ListItem, ListView, Markdown
 
-from src import __version__
-from src.data import load_config, load_history, save_config, save_history
-from src.data.data_directory import data_directory
-from src.dialogs import ErrorDialog, HelpDialog, InformationDialog, InputDialog
-from src.utils import maybe_markdown
-from src.widgets import Navigation, Omnibox, Viewer
-from src.widgets.navigation_panes import Bookmarks, History, LocalFiles
+from app import __version__
+from data import load_config, load_history, save_config, save_history
+from data.data_directory import data_directory
+from dialogs import ErrorDialog, HelpDialog, InformationDialog, InputDialog
+from utils import maybe_markdown
+from widgets import Navigation, Omnibox, Viewer
+from widgets.navigation_panes import Bookmarks, History, LocalFiles
 
 
 class Main(Screen[None]):

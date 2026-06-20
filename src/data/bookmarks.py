@@ -4,7 +4,7 @@ from json import JSONEncoder, dumps, loads
 from pathlib import Path
 from typing import Any, NamedTuple
 
-from src.data.data_directory import data_directory
+from data.data_directory import data_directory
 
 
 class Bookmark(NamedTuple):
