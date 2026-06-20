@@ -1,6 +1,10 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "scientia-core"
-version = "0.1.0"
+version = "0.1.1"
 description = "Scientia Omnibus -- a knowledge base viewer"
 authors = [
     { name = "MarkLevkovich", email = "levmarkpost@gmail.com" }
@@ -38,13 +42,6 @@ Homepage = "https://github.com/Scientia-Omnibus/scientia-core"
 
 [project.scripts]
 scientia-core = "src.app.app:run"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.hatch.build.targets.wheel]
-packages = ["src"]
 
 [tool.uv]
 package = true

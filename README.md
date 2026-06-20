@@ -1,89 +1,52 @@
-# Usage
+# scientia-core
 
-## Interface
+Offline terminal knowledge reader. Download Markdown knowledge packs once, read without internet. Built with [Textual](https://textual.textualize.io/).
 
-The application has three main areas:
+Ships under 10 MB. Runs on anything with a terminal — from a $5 Raspberry Pi to a 15-year-old netbook.
 
-- **Omnibox** (top bar) — command input, works like a browser address bar.
-- **Navigation** (side panel) — four tabs: Contents, Local, Bookmarks, History.
-- **Viewer** (main area) — Markdown document viewer.
+---
 
-The side panel can be hidden/shown (`Ctrl+N`), tabs can be switched,
-and it can be docked to the opposite side (`\`).
+## Install
 
-## Global shortcuts
+```bash
+# via uv (recommended)
+uv tool install scientia-core
 
-| Key | Action |
-| -- | -- |
-| `/` or `:` | Focus the omnibox |
-| `Escape` | Return to omnibox / clear omnibox / quit |
-| `Ctrl+N` | Show/hide the navigation sidebar |
-| `Ctrl+B` | Show bookmarks |
-| `Ctrl+L` | Show local files |
-| `Ctrl+T` | Show table of contents |
-| `Ctrl+Y` | Show history |
-| `Ctrl+Left` | Go backward in history |
-| `Ctrl+Right` | Go forward in history |
-| `Ctrl+D` | Bookmark the current document |
-| `Ctrl+R` | Reload the current document |
-| `Ctrl+Q` | Quit the application |
-| `F1` | Help |
-| `F2` | About |
-| `F10` | Toggle dark/light theme |
+# via pip
+pip install scientia-core
+```
 
-## Navigation panel
+Then run:
 
-| Key | Action |
-| -- | -- |
-| `,` / `a` / `h` / `Ctrl+Left` / `Shift+Left` | Previous tab |
-| `.` / `d` / `l` / `Ctrl+Right` / `Shift+Right` | Next tab |
-| `\` | Dock the panel left/right |
+```bash
+scientia-core
+```
 
-## Document viewer
+> For keybindings and commands, see **[USAGE.md](USAGE.md)**.
 
-When the viewer is focused:
+## Features
 
-| Key | Action |
-| -- | -- |
-| `w` / `k` | Scroll up |
-| `s` / `j` | Scroll down |
-| `Space` | Page down |
-| `b` | Page up |
+- **Fully offline** — download once, read anywhere, no network required
+- **Keyboard-driven** — omnibox (`/` or `:`), tab navigation, commands
+- **4 navigation tabs** — Contents, Local Files, Bookmarks, History
+- **Fuzzy search** across all document titles in your knowledge pack
+- **GitHub sync** — pull knowledge base updates with `Ctrl+G`
+- **Dark / light themes** — toggle with `F10`
 
-## Bookmarks
+## Tech
 
-| Key | Action |
-| -- | -- |
-| `Delete` | Delete bookmark |
-| `r` | Rename bookmark |
+- Python 3.12+, [Textual](https://textual.textualize.io/) TUI framework
+- [rapidfuzz](https://github.com/maxbachmann/RapidFuzz) for fuzzy matching
+- [GitPython](https://github.com/gitpython-developers/GitPython) for sync
 
-## History
+## TODO
 
-| Key | Action |
-| -- | -- |
-| `Delete` | Delete history entry |
-| `Backspace` | Clear all history |
+- [ ] BM25 full-text search across document contents
+- [ ] Auto-update mechanism
+- [ ] Standalone Windows package (`.exe`)
+- [ ] Linux AppImage build
+- [ ] More knowledge pack sources
 
-## Search
+## License
 
-As you type in the omnibox, fuzzy search automatically scans the knowledge directory
-for matching `.md` files. Results appear in a dropdown below the omnibox.
-
-- `Down` arrow — move focus to the results list.
-- `Up` arrow (at the top of results) — return focus to the omnibox.
-- `Enter` — open the selected file.
-- `Escape` — close the results dropdown.
-
-## Commands
-
-Press `/` or click the omnibox, then enter a command:
-
-| Command | Aliases | Description |
-| -- | -- | -- |
-| `about` | `a` | Show information about the application |
-| `bookmarks` | `b`, `bm` | Show the bookmarks list |
-| `contents` | `c`, `toc` | Show the table of contents |
-| `help` | `?` | Show this help |
-| `history` | `h` | Show the history |
-| `local` | `l` | Show local files |
-| `quit` | `q` | Quit the application |
+MIT
