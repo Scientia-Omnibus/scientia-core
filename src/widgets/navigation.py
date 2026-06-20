@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import git
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Vertical
@@ -10,8 +11,11 @@ from textual.reactive import var
 from textual.widgets import TabbedContent, Tabs
 from typing_extensions import Self
 
-from src.dialogs.directory_picker import DirectoryPicker
 from src.data import load_config, save_config
+from src.data.data_directory import data_directory
+from src.dialogs import ErrorDialog
+from src.dialogs.directory_picker import DirectoryPicker
+from src.dialogs.knowledge_sync import KnowledgeSync
 from src.widgets.navigation_panes.bookmarks import Bookmarks
 from src.widgets.navigation_panes.history import History
 from src.widgets.navigation_panes.local_files import LocalFiles
@@ -21,11 +25,9 @@ from src.widgets.omnibox import Omnibox
 
 
 class Navigation(Vertical, can_focus=True, can_focus_children=True):
-    """A navigation panel widget."""
-
     DEFAULT_CSS = """
     Navigation {
-        width: 44;
+        width: 35%;
         background: $panel;
         display: block;
         dock: left;
@@ -49,18 +51,12 @@ class Navigation(Vertical, can_focus=True, can_focus_children=True):
         Binding("full_stop,d,ctrl+right,shift+right,l", "next_tab", "", show=False),
         Binding("\\", "toggle_dock", "Dock left/right"),
     ]
-    """Bindings local to the navigation pane."""
 
     popped_out: var[bool] = var(False)
-    """Is the navigation popped out?"""
-
     docked_left: var[bool] = var(True)
-    """Should navigation be docked to the left side of the screen?"""
 
     def compose(self) -> ComposeResult:
-        """Compose the content of the navigation pane."""
         self.popped_out = True
-        # pylint:disable=attribute-defined-outside-init
         self._contents = TableOfContents()
         self._local_files = LocalFiles()
         self._bookmarks = Bookmarks()
@@ -73,44 +69,36 @@ class Navigation(Vertical, can_focus=True, can_focus_children=True):
             yield self._history
 
     def on_mount(self) -> None:
-        """Configure navigation once the DOM is set up."""
         self.docked_left = load_config().navigation_left
 
     class Hidden(Message):
-        """Message sent when the navigation is hidden."""
+        pass
 
     def watch_popped_out(self) -> None:
-        """Watch for changes to the popped out state."""
         self.set_class(not self.popped_out, "hidden")
         if not self.popped_out:
             self.post_message(self.Hidden())
 
     def toggle(self) -> None:
-        """Toggle the popped/unpopped state."""
         self.popped_out = not self.popped_out
 
     def watch_docked_left(self) -> None:
-        """Watch for changes to the left-docking status."""
         self.styles.dock = "left" if self.docked_left else "right"
 
     @property
     def table_of_contents(self) -> TableOfContents:
-        """The table of contents widget."""
         return self._contents
 
     @property
     def local_files(self) -> LocalFiles:
-        """The local files widget."""
         return self._local_files
 
     @property
     def bookmarks(self) -> Bookmarks:
-        """The bookmarks widget."""
         return self._bookmarks
 
     @property
     def history(self) -> History:
-        """The history widget."""
         return self._history
 
     def jump_to_local_files(self, target: Path | None = None) -> Self:
@@ -198,6 +186,30 @@ class Navigation(Vertical, can_focus=True, can_focus_children=True):
     def change_knowledge_dir(self) -> None:
         self.app.push_screen(DirectoryPicker(), self._on_dir_selected)
 
+    def update_knowledge_base(self) -> None:
+        self.app.push_screen(KnowledgeSync(), self._sync_knowledge_base)
+
     def _on_dir_selected(self, target: Path | None) -> None:
         if target:
             self.post_message(Omnibox.LocalChdirCommand(target))
+
+    def _sync_knowledge_base(self, repo_name: str) -> None:
+        repo_path = f"https://github.com/Scientia-Omnibus/{repo_name}"
+        target_path = data_directory() / repo_name
+        try:
+            if target_path.exists():
+                repo = git.Repo(target_path)
+                repo.remotes.origin.fetch("main")
+                repo.git.reset("--hard", "origin/main")
+                repo.git.clean("-fd")
+
+            else:
+                git.Repo.clone_from(repo_path, target_path)
+            self.post_message(Omnibox.LocalChdirCommand(data_directory()))
+        except Exception:
+            self.app.push_screen(
+                ErrorDialog(
+                    "Oops...",
+                    "Error while syncing repositories.",
+                )
+            )

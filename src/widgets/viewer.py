@@ -25,8 +25,7 @@ PLACEHOLDER = f"""\
 
 Welcome to {APPLICATION_TITLE}!
 
-
-here will be guide how to use this app and download DB's from gh repos
+A guide on how to use this app and download databases from GitHub repositories will be here.
 """
 
 

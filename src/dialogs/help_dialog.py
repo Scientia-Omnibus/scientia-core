@@ -12,7 +12,7 @@ from src import __version__
 HELP: Final[str] = f"""\
 # Scientia Omnibus v{__version__} Help
 
-Scientia Omnibus — a terminal program for viewing your education storage.
+Scientia Omnibus — a terminal program for viewing your knowledge base.
 
 ## Interface
 
@@ -31,6 +31,7 @@ or the panel can be moved to the opposite side (`\\`).
 | -- | -- |
 | `/` or `:` | Focus on omnibox (command line) |
 | `Escape` | Return to omnibox / clear omnibox / exit |
+| `Ctrl+G` | Download or update knowledge base repositories |
 | `Ctrl+O` | Change the search directory |
 | `Ctrl+N` | Show/hide navigation sidebar |
 | `Ctrl+B` | Show bookmarks |
@@ -102,6 +103,22 @@ Press `/` or click the omnibox, then type one of the commands:
 | `history` | `h` | Show history |
 | `local` | `l` | Show local files |
 | `quit` | `q` | Quit the program |
+
+## Knowledge Base Sync
+
+`Ctrl+G` opens a dialog to download or update knowledge repositories. Four repositories are available:
+
+- **humanities-sciences**
+- **social-sciences**
+- **natural-sciences**
+- **formal-sciences**
+
+Select a repository and press `OK`. If the repository already exists locally, it will be
+force-synced — any local changes are overwritten with the remote version. If it does not
+exist, it will be cloned from GitHub (`github.com/Scientia-Omnibus`).
+
+After syncing, the file tree navigates to the downloaded repository so you can browse
+its contents immediately.
 """
 
 
