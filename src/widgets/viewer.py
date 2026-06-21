@@ -21,22 +21,34 @@ from dialogs import ErrorDialog
 APPLICATION_TITLE = "Scientia Omnibus"
 
 PLACEHOLDER = f"""\
-# {APPLICATION_TITLE} {__version__}
+# Welcome to {APPLICATION_TITLE}  `v{__version__}`
 
-A quiet place for the things you save and read later.
+---
 
-Everything lives in Markdown files — downloaded once, stored locally,
+> A quiet place for the things you save and read later.
+
+---
+
+### 📦 Store
+
+Everything lives in **Markdown files** — downloaded once, stored locally,
 always available. No internet required once you have what you need.
 
-The omnibox at the top is the main way to get around. Type `/` or `:`
-to focus it, search by title, or run a command. The sidebar has four
-tabs: contents, local files, bookmarks, and history.
+### 🧭 Navigate
 
-It is a small program — under 10 MB — and runs on almost anything.
+The omnibox at the top is the main way to get around. Type **`/`** or **`:`**
+to focus it, search by title, or run a command.
+
+The sidebar has four tabs: **Contents**, **Local files**, **Bookmarks**, and **History**.
+
+### 💻 About
+
+It is a small program — **under 10 MB** — and runs on almost anything.
 Old laptops, cheap single-board computers, you name it.
 
-There is nothing else to set up. If you have a knowledge pack ready,
-start opening files. Otherwise `F1` will show the available commands.
+---
+
+> **Tip:** Press **`F1`** at any time to see all available commands.
 """
 
 
