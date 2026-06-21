@@ -15,6 +15,7 @@ from app import __version__
 from data import load_config, load_history, save_config, save_history
 from data.data_directory import data_directory
 from dialogs import ErrorDialog, HelpDialog, InformationDialog, InputDialog, YesNoDialog
+from dialogs.progress_screen import ProgressScreen
 from utils import maybe_markdown
 from utils.update_utils import (
     compare_versions,
@@ -131,7 +132,7 @@ class Main(Screen[None]):
                     self.app.push_screen(
                         YesNoDialog(
                             "New version available!",
-                            "Are you sure you want to update?",
+                            "Are you sure you want to update?\nafter the update, open the app again",
                         ),
                         self._on_update_response,
                     )
@@ -139,7 +140,9 @@ class Main(Screen[None]):
     async def _on_update_response(self, response: bool):
         if not response:
             return
+        self.app.push_screen(ProgressScreen("Updating..."))
         await update_version()
+        self.app.pop_screen()
         self.app.exit()
 
     def on_navigation_hidden(self) -> None:
