@@ -217,3 +217,7 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 .idea
+
+
+# PyPI
+src/scientia_core.egg-info

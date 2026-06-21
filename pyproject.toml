@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scientia-core"
-version = "0.1.5"
+version = "0.1.6"
 description = "Scientia Omnibus -- a knowledge base viewer"
 authors = [
     { name = "MarkLevkovich", email = "levmarkpost@gmail.com" }
@@ -29,6 +29,7 @@ classifiers = [
 
 dependencies = [
     "gitpython>=3.1.50",
+    "httpx>=0.28.1",
     "rapidfuzz>=3.14.5",
     "ruff>=0.15.17",
     "textual[syntax]>=8.2.7",

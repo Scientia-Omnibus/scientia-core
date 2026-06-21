@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from pathlib import Path
 
 import git
@@ -16,6 +17,7 @@ from data.data_directory import data_directory
 from dialogs import ErrorDialog
 from dialogs.directory_picker import DirectoryPicker
 from dialogs.knowledge_sync import KnowledgeSync
+from dialogs.progress_screen import ProgressScreen
 from widgets.navigation_panes.bookmarks import Bookmarks
 from widgets.navigation_panes.history import History
 from widgets.navigation_panes.local_files import LocalFiles
@@ -193,20 +195,22 @@ class Navigation(Vertical, can_focus=True, can_focus_children=True):
         if target:
             self.post_message(Omnibox.LocalChdirCommand(target))
 
-    def _sync_knowledge_base(self, repo_name: str) -> None:
+    async def _sync_knowledge_base(self, repo_name: str) -> None:
+        self.app.push_screen(ProgressScreen("Syncing knowledge base..."))
         repo_path = f"https://github.com/Scientia-Omnibus/{repo_name}"
         target_path = data_directory() / repo_name
         try:
             if target_path.exists():
                 repo = git.Repo(target_path)
-                repo.remotes.origin.fetch("main")
+                await asyncio.to_thread(repo.remotes.origin.fetch, "main")
                 repo.git.reset("--hard", "origin/main")
                 repo.git.clean("-fd")
-
             else:
-                git.Repo.clone_from(repo_path, target_path)
+                await asyncio.to_thread(git.Repo.clone_from, repo_path, target_path)
+            self.app.pop_screen()
             self.post_message(Omnibox.LocalChdirCommand(data_directory()))
         except Exception:
+            self.app.pop_screen()
             self.app.push_screen(
                 ErrorDialog(
                     "Oops...",
