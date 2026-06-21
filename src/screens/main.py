@@ -14,8 +14,15 @@ from textual.widgets import Footer, Input, Label, ListItem, ListView, Markdown
 from app import __version__
 from data import load_config, load_history, save_config, save_history
 from data.data_directory import data_directory
-from dialogs import ErrorDialog, HelpDialog, InformationDialog, InputDialog
+from dialogs import ErrorDialog, HelpDialog, InformationDialog, InputDialog, YesNoDialog
 from utils import maybe_markdown
+from utils.update_utils import (
+    compare_versions,
+    get_local_version,
+    get_github_version,
+    update_version,
+    check_internet_connection,
+)
 from widgets import Navigation, Omnibox, Viewer
 from widgets.navigation_panes import Bookmarks, History, LocalFiles
 
@@ -117,6 +124,23 @@ class Main(Screen[None]):
             self.query_one(Viewer).load_history(history)
 
         self.query_one(Navigation).jump_to_local_files(self._initial_location)
+
+        if check_internet_connection():
+            match compare_versions(get_local_version(), await get_github_version()):
+                case 1:
+                    self.app.push_screen(
+                        YesNoDialog(
+                            "New version available!",
+                            "Are you sure you want to update?",
+                        ),
+                        self._on_update_response,
+                    )
+
+    async def _on_update_response(self, response: bool):
+        if not response:
+            return
+        await update_version()
+        self.app.exit()
 
     def on_navigation_hidden(self) -> None:
         self.query_one(Viewer).focus()

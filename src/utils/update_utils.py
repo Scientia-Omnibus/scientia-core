@@ -1,3 +1,4 @@
+import asyncio
 import socket
 from importlib.metadata import version
 from itertools import zip_longest
@@ -18,11 +19,12 @@ def get_local_version():
     return version("scientia-core")
 
 
-def get_github_version(
+async def get_github_version(
     url: str = "https://api.github.com/repos/Scientia-Omnibus/scientia-core/releases/latest",
 ):
     headers = {"User-Agent": "scientia-core/1.0"}
-    response = httpx.get(url, timeout=10, headers=headers)
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url, timeout=10, headers=headers)
     response.raise_for_status()
 
     data = response.json()
@@ -42,7 +44,14 @@ def compare_versions(local: str, github: str):
 
     for f, s in zip_longest(v1, v2, fillvalue="0"):
         if int(f) < int(s):
-            return -1
-        if int(f) < int(s):
             return 1
+        if int(f) > int(s):
+            return -1
     return 0
+
+
+async def update_version():
+    proc = await asyncio.create_subprocess_exec(
+        "uv", "tool", "upgrade", "scientia-core"
+    )
+    await proc.wait()
