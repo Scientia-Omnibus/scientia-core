@@ -54,7 +54,7 @@ class KnowledgeSync(ModalScreen[str]):
 
     def __init__(self) -> None:
         super().__init__()
-        self.sciences = ["formal-sciences"]
+        self.sciences = ["formal-sciences", "survival-and-medicine"]
 
     def compose(self) -> ComposeResult:
         with Vertical():
