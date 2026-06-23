@@ -113,6 +113,7 @@ async def test_main_screen_bookmark_this_opens_input() -> None:
         main = pilot.app.screen
         viewer = main.query_one(Viewer)
         from pathlib import Path
+
         viewer.history.remember(Path("/tmp/test.md"))
         viewer.viewing_location = True
         await pilot.press("ctrl+d")

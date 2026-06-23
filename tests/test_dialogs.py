@@ -68,6 +68,7 @@ async def test_information_dialog_shows() -> None:
 
 async def test_yes_no_dialog_yes_returns_true() -> None:
     from textual.app import App
+
     result: Any = None
 
     class TestApp(App):
@@ -87,6 +88,7 @@ async def test_yes_no_dialog_yes_returns_true() -> None:
 
 async def test_yes_no_dialog_no_returns_false() -> None:
     from textual.app import App
+
     result: Any = None
 
     class TestApp(App):
@@ -109,6 +111,7 @@ async def test_yes_no_dialog_no_returns_false() -> None:
 
 async def test_yes_no_dialog_escape_pops_screen() -> None:
     from textual.app import App
+
     result: Any = "unset"
 
     class TestApp(App):
@@ -130,13 +133,12 @@ async def test_yes_no_dialog_escape_pops_screen() -> None:
 
 async def test_input_dialog_accept_returns_value() -> None:
     from textual.app import App
+
     result: Any = None
 
     class TestApp(App):
         def on_mount(self) -> None:
-            self.push_screen(
-                InputDialog("Enter name:", "default"), self._on_result
-            )
+            self.push_screen(InputDialog("Enter name:", "default"), self._on_result)
 
         def _on_result(self, value: str | None) -> None:
             nonlocal result
@@ -153,13 +155,12 @@ async def test_input_dialog_accept_returns_value() -> None:
 
 async def test_input_dialog_cancel_pops_screen() -> None:
     from textual.app import App
+
     result: Any = "unset"
 
     class TestApp(App):
         def on_mount(self) -> None:
-            self.push_screen(
-                InputDialog("Enter name:", "default"), self._on_result
-            )
+            self.push_screen(InputDialog("Enter name:", "default"), self._on_result)
 
         def _on_result(self, value: str | None) -> None:
             nonlocal result
@@ -176,13 +177,12 @@ async def test_input_dialog_cancel_pops_screen() -> None:
 
 async def test_input_dialog_escape_pops_screen() -> None:
     from textual.app import App
+
     result: Any = "unset"
 
     class TestApp(App):
         def on_mount(self) -> None:
-            self.push_screen(
-                InputDialog("Enter name:", "default"), self._on_result
-            )
+            self.push_screen(InputDialog("Enter name:", "default"), self._on_result)
 
         def _on_result(self, value: str | None) -> None:
             nonlocal result

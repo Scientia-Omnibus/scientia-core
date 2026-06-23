@@ -38,11 +38,14 @@ def _patch_dependencies(
     monkeypatch.setattr(nav_mod, "load_config", mock_load)
     monkeypatch.setattr(update_utils, "check_internet_connection", lambda: False)
     monkeypatch.setattr(update_utils, "get_local_version", lambda: "0.1.8")
-    monkeypatch.setattr(main_mod, "check_internet_connection", lambda: False, raising=False)
+    monkeypatch.setattr(
+        main_mod, "check_internet_connection", lambda: False, raising=False
+    )
     monkeypatch.setattr(main_mod, "compare_versions", lambda _a, _b: 0, raising=False)  # noqa: E731
 
     def mock_save(_c: object) -> Config:
         return mock_config
+
     monkeypatch.setattr(data, "save_config", mock_save)
 
     monkeypatch.setattr(main_mod, "save_config", mock_save)
