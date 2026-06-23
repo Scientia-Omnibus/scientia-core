@@ -14,8 +14,8 @@ from typing_extensions import Self
 
 from data import load_config, save_config
 from data.data_directory import data_directory
-from dialogs import ErrorDialog
 from dialogs.directory_picker import DirectoryPicker
+from dialogs.error import ErrorDialog
 from dialogs.knowledge_sync import KnowledgeSync
 from dialogs.progress_screen import ProgressScreen
 from widgets.navigation_panes.bookmarks import Bookmarks

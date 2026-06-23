@@ -11,7 +11,8 @@ from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 
 from data import Bookmark, load_bookmarks, save_bookmarks
-from dialogs import InputDialog, YesNoDialog
+from dialogs.input_dialog import InputDialog
+from dialogs.yes_no_dialog import YesNoDialog
 from widgets.navigation_panes.navigation_pane import NavigationPane
 
 

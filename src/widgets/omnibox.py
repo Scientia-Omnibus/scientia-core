@@ -42,6 +42,8 @@ class Omnibox(Input):
 
     @staticmethod
     def _split_command(value: str) -> list[str]:
+        if not value.strip():
+            return ["", ""]
         command = value.split(None, 1)
         return [*command, ""] if len(command) == 1 else command
 

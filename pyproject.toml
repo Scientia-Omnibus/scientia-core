@@ -31,7 +31,6 @@ dependencies = [
     "gitpython>=3.1.50",
     "httpx>=0.28.1",
     "rapidfuzz>=3.14.5",
-    "ruff>=0.15.17",
     "textual[syntax]>=8.2.7",
     "typing-extensions>=4.5",
     "xdg>=6,<7",
@@ -45,6 +44,9 @@ where = ["src"]
 
 [project.scripts]
 scientia-core = "app.app:run"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
 
 [tool.uv]
 package = true
@@ -62,3 +64,10 @@ exclude = [
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "ruff>=0.15.18",
+]

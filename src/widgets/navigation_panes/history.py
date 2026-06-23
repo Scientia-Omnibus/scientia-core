@@ -10,7 +10,7 @@ from textual.message import Message
 from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 
-from dialogs import YesNoDialog
+from dialogs.yes_no_dialog import YesNoDialog
 from widgets.navigation_panes.navigation_pane import NavigationPane
 
 
