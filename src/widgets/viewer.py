@@ -16,7 +16,7 @@ from textual.widgets import Markdown
 from typing_extensions import Final
 
 from app import __version__
-from dialogs import ErrorDialog
+from dialogs.error import ErrorDialog
 
 APPLICATION_TITLE = "Scientia Omnibus"
 
