@@ -1,6 +1,6 @@
 __author__ = "Scientia Omnibus"
 __email__ = "levmarkpost@gmail.com"
-__version__ = "0.1.8"
+__version__ = "0.1.9"
 __licence__ = "MIT"
 
 
