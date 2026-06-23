@@ -322,7 +322,6 @@ source = { editable = "." }
 dependencies = [
     { name = "gitpython" },
     { name = "httpx" },
-    { name = "pytest" },
     { name = "rapidfuzz" },
     { name = "textual", extra = ["syntax"] },
     { name = "typing-extensions" },
@@ -331,6 +330,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "pytest" },
     { name = "ruff" },
 ]
 
@@ -338,7 +338,6 @@ dev = [
 requires-dist = [
     { name = "gitpython", specifier = ">=3.1.50" },
     { name = "httpx", specifier = ">=0.28.1" },
-    { name = "pytest", specifier = ">=9.1.1" },
     { name = "rapidfuzz", specifier = ">=3.14.5" },
     { name = "textual", extras = ["syntax"], specifier = ">=8.2.7" },
     { name = "typing-extensions", specifier = ">=4.5" },
@@ -346,7 +345,10 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "ruff", specifier = ">=0.15.18" }]
+dev = [
+    { name = "pytest", specifier = ">=9.1.1" },
+    { name = "ruff", specifier = ">=0.15.18" },
+]
 
 [[package]]
 name = "smmap"
