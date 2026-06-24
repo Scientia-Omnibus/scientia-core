@@ -1,8 +1,11 @@
+from abc import abstractmethod, ABC
+
 from textual.widgets import TabbedContent, TabPane
 from typing_extensions import Self
 
 
-class NavigationPane(TabPane):
+class NavigationPane(ABC, TabPane):
+    @abstractmethod
     def set_focus_within(self) -> None:
         pass
 
