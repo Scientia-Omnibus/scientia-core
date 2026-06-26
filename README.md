@@ -41,11 +41,21 @@ scientia-core
 
 ## TODO
 
+### Reading Experience
+- [ ] **Find in page** (`Ctrl+F`) — search within the current document with highlighting and match navigation
+- [ ] **Reading progress** — save and restore scroll position per document; show "Continue reading" indicators
+- [ ] **Document tabs** — open multiple documents simultaneously, each with its own scroll state and history
+
+### Search
 - [ ] BM25 full-text search across document contents
-- [x] Auto-update mechanism
+
+### Packaging & Distribution
 - [ ] Standalone Windows package (`.exe`)
 - [ ] Linux AppImage build
+
+### Content & Sync
 - [ ] More knowledge pack sources
+- [x] Auto-update mechanism
 
 ## License
 
