@@ -42,7 +42,7 @@ scientia-core
 ## TODO
 
 - [ ] BM25 full-text search across document contents
-- [ ] Auto-update mechanism
+- [x] Auto-update mechanism
 - [ ] Standalone Windows package (`.exe`)
 - [ ] Linux AppImage build
 - [ ] More knowledge pack sources
