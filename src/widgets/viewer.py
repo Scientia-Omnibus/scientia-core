@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from collections import deque
 from pathlib import Path
 from typing import Callable
@@ -9,9 +10,12 @@ from mdit_py_plugins import front_matter
 from textual import on, work
 from textual.app import ComposeResult
 from textual.binding import Binding
+from textual.color import Color
 from textual.containers import VerticalScroll
+from textual.content import Span
 from textual.message import Message
 from textual.reactive import var
+from textual.style import Style
 from textual.widgets import Markdown
 from typing_extensions import Final
 
@@ -129,6 +133,7 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         self._source_text: str = PLACEHOLDER
         self._line_offsets: list[int] = _build_line_offsets(PLACEHOLDER)
         self._find_offset: int | None = None
+        self._original_contents: dict = {}
 
     class ViewerMessage(Message):
         def __init__(self, viewer: Viewer) -> None:
@@ -173,6 +178,42 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         self._source_text = text
         self._line_offsets = _build_line_offsets(text)
         self._find_offset = None
+        self._clear_highlights()
+
+    def _clear_highlights(self) -> None:
+        for block, original in self._original_contents.items():
+            try:
+                block.set_content(original)
+            except Exception:
+                pass
+        self._original_contents.clear()
+
+    def _highlight_matches(
+        self, query: str, case_sensitive: bool, match_index: int | None = None
+    ) -> None:
+        self._clear_highlights()
+        if not query or match_index is None:
+            return
+
+        hl = Style(background=Color(196, 167, 231))
+        flags = 0 if case_sensitive else re.IGNORECASE
+        pattern = re.compile(re.escape(query), flags)
+
+        count = 0
+        for block in self.document.query("MarkdownBlock"):
+            try:
+                content = block._content
+            except AttributeError:
+                continue
+            for match in pattern.finditer(content.plain):
+                count += 1
+                if count == match_index:
+                    start, end = match.span()
+                    highlighted = content.add_spans([Span(start, end, hl)])
+                    self._original_contents[block] = content
+                    block.set_content(highlighted)
+                    self.document.refresh()
+                    return
 
     def _match_status(
         self, query: str, case_sensitive: bool, current_start: int
@@ -214,12 +255,14 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         )
         if start < 0:
             self._find_offset = None
+            self._clear_highlights()
             self.find_bar.set_status("No matches")
             return
 
         self._find_offset = end
         self.scroll_to_offset(start)
         index, total = self._match_status(event.query, event.case_sensitive, start)
+        self._highlight_matches(event.query, event.case_sensitive, match_index=index)
         self.find_bar.set_status(f"{index} / {total}")
 
     @on(FindBar.FindPrevious)
@@ -237,17 +280,20 @@ class Viewer(VerticalScroll, can_focus=True, can_focus_children=True):
         )
         if start < 0:
             self._find_offset = None
+            self._clear_highlights()
             self.find_bar.set_status("No matches")
             return
 
         self._find_offset = start
         self.scroll_to_offset(start)
         index, total = self._match_status(event.query, event.case_sensitive, start)
+        self._highlight_matches(event.query, event.case_sensitive, match_index=index)
         self.find_bar.set_status(f"{index} / {total}")
 
     @on(FindBar.Closed)
     def on_find_bar_closed(self) -> None:
         self._find_offset = None
+        self._clear_highlights()
         self.focus()
 
     def _post_load(self, location: Path, remember: bool = True) -> None:
