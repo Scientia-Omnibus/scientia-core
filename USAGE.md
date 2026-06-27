@@ -25,6 +25,7 @@ and it can be docked to the opposite side (`\`).
 | `Ctrl+Left` | Go backward in history |
 | `Ctrl+Right` | Go forward in history |
 | `Ctrl+D` | Bookmark the current document |
+| `Ctrl+F` | Find in current document |
 | `Ctrl+R` | Reload the current document |
 | `Ctrl+G` | Sync knowledge base from GitHub |
 | `Ctrl+Q` | Quit the application |
@@ -72,6 +73,17 @@ for matching `.md` files. Results appear in a dropdown below the omnibox.
 - `Up` arrow (at the top of results) — return focus to the omnibox.
 - `Enter` — open the selected file.
 - `Escape` — close the results dropdown.
+
+### In-document find
+
+Press `Ctrl+F` to open the find bar above the viewer. Type to search the open document.
+
+| Key | Action |
+| -- | -- |
+| `Enter` / `▼` | Next match |
+| `Shift+Enter` / `▲` | Previous match |
+| `Aa` | Toggle case-sensitive search |
+| `Escape` | Close the find bar |
 
 ## Commands
 
