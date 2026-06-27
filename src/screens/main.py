@@ -88,6 +88,7 @@ class Main(Screen[None]):
         Binding("ctrl+r", "reload", "", show=False),
         Binding("ctrl+t", "table_of_contents", "", show=False),
         Binding("ctrl+y", "history", "", show=False),
+        Binding("ctrl+f", "find", "Find", show=False),
         Binding("escape", "escape", "", show=False),
         Binding("ctrl+n", "navigation", "Navigation"),
         Binding("ctrl+q", "app.quit", "Quit"),
@@ -251,6 +252,10 @@ class Main(Screen[None]):
         self.query_one(Navigation).toggle()
 
     def action_escape(self) -> None:
+        viewer = self.query_one(Viewer)
+        if viewer.find_bar.display:
+            viewer.find_bar.hide()
+            return
         results = self.query_one("#omnibox-results", ListView)
         if results.has_class("has-results"):
             results.remove_class("has-results")
@@ -264,6 +269,9 @@ class Main(Screen[None]):
             if self.query("Navigation:focus-within"):
                 self.query_one(Navigation).popped_out = False
             omnibox.focus()
+
+    def action_find(self) -> None:
+        self.query_one(Viewer).show_find()
 
     def action_omnibox(self) -> None:
         self.query_one(Omnibox).focus()
@@ -334,6 +342,8 @@ class Main(Screen[None]):
         self.query_one(Navigation).update_knowledge_base()
 
     def on_input_changed(self, event: Input.Changed) -> None:
+        if event.input.id == "find-input":
+            return
         query = event.value.strip()
         results = self.query_one("#omnibox-results", ListView)
         results.clear()
@@ -356,6 +366,8 @@ class Main(Screen[None]):
             results.remove_class("has-results")
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
+        if event.input.id == "find-input":
+            return
         self.query_one("#omnibox-results", ListView).remove_class("has-results")
 
     def on_list_view_selected(self, event: ListView.Selected) -> None:
