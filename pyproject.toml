@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scientia-core"
-version = "0.1.9"
+version = "0.2.0"
 description = "Scientia Omnibus -- a knowledge base viewer"
 authors = [
     { name = "MarkLevkovich", email = "levmarkpost@gmail.com" }
