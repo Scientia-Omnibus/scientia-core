@@ -14,7 +14,7 @@ class FindBar(Horizontal):
     FindBar {
         dock: top;
         display: none;
-        height: 3;
+        height: auto;
         width: 100%;
         background: $panel;
         border-bottom: solid $primary;
