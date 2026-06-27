@@ -42,6 +42,7 @@ or the panel can be moved to the opposite side (`\\`).
 | `Ctrl+Right` | Go forward in viewing history |
 | `Ctrl+D` | Add current document to bookmarks |
 | `Ctrl+R` | Reload current document |
+| `Ctrl+F` | Find in current document |
 | `Ctrl+Q` | Quit application |
 | `F1` | This help |
 | `F2` | About |
@@ -89,6 +90,15 @@ for matching `.md` files. Results appear in a dropdown list below the omnibox.
 - `Up` arrow (at the top of results) — return focus to the omnibox.
 - `Enter` — open the selected file in the viewer.
 - `Escape` — close the results dropdown.
+
+### In-document find
+
+Press `Ctrl+F` to open the find bar above the viewer. Type to search the open document.
+
+- `Enter` / `F3` / `▼` — next match
+- `Shift+Enter` / `Shift+F3` / `▲` — previous match
+- `Aa` — toggle case-sensitive search
+- `Escape` — close the find bar
 
 ## Commands
 
