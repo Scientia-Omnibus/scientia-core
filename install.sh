@@ -28,7 +28,8 @@ run_with_spinner() {
 
 install_git_if_missing() {
     if [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* ]]; then
-        echo "Windows support coming soon. Install Git from https://git-scm.com and run: uv tool install scientia-core"
+        echo "On Windows (cmd.exe), run:"
+        echo "  curl.exe -fsLo %TEMP%\\sci.ps1 https://raw.githubusercontent.com/Scientia-Omnibus/scientia-core/main/install.ps1 && powershell -ExecutionPolicy Bypass %TEMP%\\sci.ps1"
         exit 1
     fi
     if command -v git &>/dev/null; then
