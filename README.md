@@ -33,27 +33,25 @@ scientia-core
 - **GitHub sync** — pull knowledge base updates with `Ctrl+G`
 - **Dark / light themes** — toggle with `F10`
 
-## Tech
-
-- Python 3.12+, [Textual](https://textual.textualize.io/) TUI framework
-- [rapidfuzz](https://github.com/maxbachmann/RapidFuzz) for fuzzy matching
-- [GitPython](https://github.com/gitpython-developers/GitPython) for sync
-
-## TODO
+# TODO
 
 ### Reading Experience
-- [ ] **Find in page** (`Ctrl+F`) — search within the current document with highlighting and match navigation
+
+- [x] **Find in page** (`Ctrl+F`) — search within the current document with highlighting and match navigation
 - [ ] **Reading progress** — save and restore scroll position per document; show "Continue reading" indicators
 - [ ] **Document tabs** — open multiple documents simultaneously, each with its own scroll state and history
 
 ### Search
+
 - [ ] BM25 full-text search across document contents
 
 ### Packaging & Distribution
-- [ ] Standalone Windows package (`.exe`)
+
+- [x] Standalone Windows package (`.exe`)
 - [ ] Linux AppImage build
 
 ### Content & Sync
+
 - [ ] More knowledge pack sources
 - [x] Auto-update mechanism
 

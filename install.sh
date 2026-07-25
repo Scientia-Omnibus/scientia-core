@@ -26,50 +26,6 @@ run_with_spinner() {
     printf "\r${GREEN}::${NC} %s ${GREEN}done${NC}\n" "$msg"
 }
 
-install_git_if_missing() {
-    if [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* ]]; then
-        echo "On Windows (cmd.exe), run:"
-        echo "  curl.exe -fsLo %TEMP%\\sci.ps1 https://raw.githubusercontent.com/Scientia-Omnibus/scientia-core/main/install.ps1 && powershell -ExecutionPolicy Bypass %TEMP%\\sci.ps1"
-        exit 1
-    fi
-    if command -v git &>/dev/null; then
-        ok "Git already installed ($(git --version))"
-        return 0
-    fi
-    warn "Git not found — installing..."
-
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        arch=$(uname -m)
-        case "$arch" in
-            x86_64)  url="https://github.com/ryanwoodsmall/static-git/releases/download/v2.47.1/git-linux-amd64-static.tar.gz" ;;
-            aarch64) url="https://github.com/ryanwoodsmall/static-git/releases/download/v2.47.1/git-linux-arm64-static.tar.gz"  ;;
-            *)       echo "Error: unsupported arch ($arch). Install git manually: https://git-scm.com"; exit 1 ;;
-        esac
-        mkdir -p "$HOME/.local/bin"
-        info "Downloading git..."
-        curl -# -fL "$url" | tar xz -C "$HOME/.local/bin"
-        export PATH="$HOME/.local/bin:$PATH"
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-        if command -v brew &>/dev/null; then
-            brew install git > /dev/null 2>&1 &
-            run_with_spinner $! "Installing git via Homebrew"
-            wait $! 2>/dev/null || true
-        else
-            echo "Error: install Git manually: https://git-scm.com"
-            exit 1
-        fi
-    else
-        echo "Error: unsupported OS ($OSTYPE). Install git manually: https://git-scm.com"
-        exit 1
-    fi
-
-    if ! command -v git &>/dev/null; then
-        echo "Error: git installation failed."
-        exit 1
-    fi
-    ok "Git installed ($(git --version))"
-}
-
 install_uv_if_missing() {
     if command -v uv &>/dev/null; then
         ok "uv already installed ($(uv --version))"
@@ -93,7 +49,6 @@ main() {
     printf "  ${CYAN}╰─────────────────────────────────────╯${NC}\n"
     printf "\n"
 
-    install_git_if_missing
     install_uv_if_missing
 
     info "Installing $APP via uv..."
