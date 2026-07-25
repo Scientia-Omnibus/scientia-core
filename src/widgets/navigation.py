@@ -1,9 +1,9 @@
 from __future__ import annotations
-
+import zipfile
 import asyncio
 from pathlib import Path
-
-import git
+import httpx
+import shutil
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Vertical
@@ -11,7 +11,7 @@ from textual.message import Message
 from textual.reactive import var
 from textual.widgets import TabbedContent, Tabs
 from typing_extensions import Self
-
+import io
 from data import load_config, save_config
 from data.data_directory import data_directory
 from dialogs.directory_picker import DirectoryPicker
@@ -197,16 +197,15 @@ class Navigation(Vertical, can_focus=True, can_focus_children=True):
 
     async def _sync_knowledge_base(self, repo_name: str) -> None:
         self.app.push_screen(ProgressScreen("Syncing knowledge base..."))
-        repo_path = f"https://github.com/Scientia-Omnibus/{repo_name}"
-        target_path = data_directory() / repo_name
+        base_dir = data_directory()
+        target_path = base_dir / repo_name
         try:
             if target_path.exists():
-                repo = git.Repo(target_path)
-                await asyncio.to_thread(repo.remotes.origin.fetch, "main")
-                repo.git.reset("--hard", "origin/main")
-                repo.git.clean("-fd")
-            else:
-                await asyncio.to_thread(git.Repo.clone_from, repo_path, target_path)
+                shutil.rmtree(target_path)
+            await self._download_knowledge(repo_name)
+            git_folder = base_dir / f"{repo_name}-main"
+            if git_folder.exists():
+                await asyncio.to_thread(git_folder.rename, target_path)
             self.app.pop_screen()
             self.post_message(Omnibox.LocalChdirCommand(data_directory()))
         except Exception:
@@ -217,3 +216,18 @@ class Navigation(Vertical, can_focus=True, can_focus_children=True):
                     "Error while syncing repositories.",
                 )
             )
+
+    async def _download_knowledge(self, repo_name: str):
+        full_path = f"https://github.com/Scientia-Omnibus/{repo_name}/archive/refs/heads/main.zip"
+        async with httpx.AsyncClient() as client:
+            async with client.stream(
+                "GET", full_path, follow_redirects=True
+            ) as response:
+                response.raise_for_status()
+                content = await response.aread()
+                await asyncio.to_thread(self._extract_zip, content)
+
+    @staticmethod
+    def _extract_zip(content: bytes):
+        with zipfile.ZipFile(io.BytesIO(content), "r") as z:
+            z.extractall(data_directory())
