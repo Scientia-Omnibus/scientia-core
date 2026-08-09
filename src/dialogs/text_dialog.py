@@ -22,11 +22,16 @@ class TextDialog(ModalScreen[None]):
     }
 
     TextDialog > Vertical {
-        background: $boost;
+        background: $panel;
         min-width: 30%;
         width: auto;
         height: auto;
-        border: round $primary;
+        border: thick $primary;
+    }
+
+    TextDialog > Vertical > Center > Static {
+        text-style: bold;
+        color: $text-primary;
     }
 
     TextDialog Static {
@@ -39,6 +44,12 @@ class TextDialog(ModalScreen[None]):
 
     TextDialog #message {
         min-width: 100%;
+        border-top: solid $primary 20%;
+        border-bottom: solid $primary 20%;
+    }
+
+    TextDialog Button {
+        margin: 0 1 1 1;
     }
     """
 
