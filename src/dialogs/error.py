@@ -11,8 +11,8 @@ class ErrorDialog(TextDialog):
     }
 
     ErrorDialog #message {
-        border-top: solid $panel;
-        border-bottom: solid $panel;
+        border-top: solid $error 25%;
+        border-bottom: solid $error 25%;
     }
     """
 

@@ -33,12 +33,18 @@ class DirectoryPicker(ModalScreen[Path]):
     }
 
     DirectoryPicker Label {
-        margin-left: 2;
+        margin: 1 2 0 2;
+        color: $text-muted;
     }
 
     DirectoryPicker OptionList {
         width: 40;
-        margin: 1;
+        margin: 1 2;
+        border: round $primary 30%;
+    }
+
+    DirectoryPicker OptionList:focus {
+        border: round $primary;
     }
 
     DirectoryPicker Button {
@@ -48,7 +54,7 @@ class DirectoryPicker(ModalScreen[Path]):
     DirectoryPicker #buttons {
         width: 100%;
         align-horizontal: right;
-        padding-right: 1;
+        padding: 0 1 1 0;
     }
     """
 

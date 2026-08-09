@@ -16,8 +16,8 @@ class FindBar(Horizontal):
         display: none;
         height: auto;
         width: 100%;
-        background: $panel;
-        border-bottom: solid $primary;
+        background: $surface;
+        border-bottom: solid $primary 30%;
         padding: 0 1;
         layout: horizontal;
         align: left middle;
@@ -26,28 +26,46 @@ class FindBar(Horizontal):
     FindBar .find-label {
         width: auto;
         padding-right: 1;
-        color: $text 50%;
+        color: $text-muted;
     }
 
     FindBar #find-input {
         width: 1fr;
         margin: 0 1 0 0;
+        border: round $primary 30%;
+    }
+
+    FindBar #find-input:focus {
+        border: round $primary;
     }
 
     FindBar #case-sensitive {
         width: auto;
         margin-right: 1;
+        color: $text-muted;
     }
 
-    FindBar Button {
+    FindBar #find-prev, FindBar #find-next {
         min-width: 3;
+        height: auto;
         margin-right: 1;
+        border: round $primary 30%;
+        background: $panel;
+        color: $text;
+    }
+
+    FindBar #find-prev:hover, FindBar #find-next:hover {
+        background: $primary 20%;
+    }
+
+    FindBar #find-prev:focus, FindBar #find-next:focus {
+        border: round $primary;
     }
 
     FindBar .find-status {
         width: auto;
         min-width: 10;
-        color: $text 50%;
+        color: $text-muted;
         text-align: right;
     }
     """

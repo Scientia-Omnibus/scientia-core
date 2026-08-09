@@ -29,12 +29,18 @@ class KnowledgeSync(ModalScreen[str]):
     }
 
     KnowledgeSync Label {
-        margin-left: 2;
+        margin: 1 2 0 2;
+        color: $text-muted;
     }
 
     KnowledgeSync OptionList {
         width: 40;
-        margin: 1;
+        margin: 1 2;
+        border: round $primary 30%;
+    }
+
+    KnowledgeSync OptionList:focus {
+        border: round $primary;
     }
 
     KnowledgeSync Button {
@@ -44,7 +50,7 @@ class KnowledgeSync(ModalScreen[str]):
     KnowledgeSync #buttons {
         width: 100%;
         align-horizontal: right;
-        padding-right: 1;
+        padding: 0 1 1 0;
     }
     """
 

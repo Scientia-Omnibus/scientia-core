@@ -1,6 +1,6 @@
 # scientia-core
 
-Offline terminal knowledge reader. Download Markdown knowledge packs once, read without internet. Built with [Textual](https://textual.textualize.io/).
+Offline terminal knowledge reader. Download Markdown knowledge packs once, read without internet. Built with [Textual](https://textual.textualize.io/). Built on the basis of [Frogmouth](https://github.com/Textualize/frogmouth).
 
 Ships under 10 MB. Runs on anything with a terminal — from a $5 Raspberry Pi to a 15-year-old netbook.
 
@@ -12,7 +12,7 @@ Ships under 10 MB. Runs on anything with a terminal — from a $5 Raspberry Pi t
 # via uv (recommended)
 uv tool install scientia-core
 
-# via pip
+# via pip or pipx
 pip install scientia-core
 ```
 

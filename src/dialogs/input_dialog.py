@@ -30,13 +30,19 @@ class InputDialog(ModalScreen[str]):
         height: auto;
     }
 
-    InputDialog Input {
-        width: 40;
-        margin: 1;
+    InputDialog Label {
+        margin: 1 2 0 2;
+        color: $text-muted;
     }
 
-    InputDialog Label {
-        margin-left: 2;
+    InputDialog Input {
+        width: 40;
+        margin: 1 2;
+        border: round $primary 30%;
+    }
+
+    InputDialog Input:focus {
+        border: round $primary;
     }
 
     InputDialog Button {
@@ -46,7 +52,7 @@ class InputDialog(ModalScreen[str]):
     InputDialog #buttons {
         width: 100%;
         align-horizontal: right;
-        padding-right: 1;
+        padding: 0 1 1 0;
     }
     """
 

@@ -8,11 +8,13 @@ class ProgressScreen(ModalScreen[None]):
     ProgressScreen {
         align: center middle;
     }
+
     ProgressScreen LoadingIndicator {
         width: 40;
         height: 5;
         border: thick $primary;
         background: $panel;
+        color: $text;
     }
     """
 

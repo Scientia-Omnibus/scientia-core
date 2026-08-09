@@ -37,10 +37,15 @@ class YesNoDialog(ModalScreen[bool]):
         padding: 1;
     }
 
+    YesNoDialog > Vertical > Center > Static {
+        text-style: bold;
+        color: $text-primary;
+    }
+
     YesNoDialog #question {
         min-width: 100%;
-        border-top: solid $primary;
-        border-bottom: solid $primary;
+        border-top: solid $primary 20%;
+        border-bottom: solid $primary 20%;
     }
 
     YesNoDialog Button {
@@ -50,7 +55,7 @@ class YesNoDialog(ModalScreen[bool]):
     YesNoDialog #buttons {
         width: 100%;
         align-horizontal: right;
-        padding-right: 1;
+        padding: 0 1 1 0;
     }
     """
 

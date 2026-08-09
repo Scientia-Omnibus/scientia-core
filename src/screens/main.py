@@ -18,15 +18,15 @@ from dialogs.error import ErrorDialog
 from dialogs.help_dialog import HelpDialog
 from dialogs.information import InformationDialog
 from dialogs.input_dialog import InputDialog
-from dialogs.yes_no_dialog import YesNoDialog
 from dialogs.progress_screen import ProgressScreen
+from dialogs.yes_no_dialog import YesNoDialog
 from utils import maybe_markdown
 from utils.update_utils import (
-    compare_versions,
-    get_local_version,
-    get_github_version,
-    update_version,
     check_internet_connection,
+    compare_versions,
+    get_github_version,
+    get_local_version,
+    update_version,
 )
 from widgets import Navigation, Omnibox, Viewer
 from widgets.navigation_panes import Bookmarks, History, LocalFiles
@@ -330,7 +330,8 @@ class Main(Screen[None]):
         config = load_config()
         config.light_mode = not config.light_mode
         save_config(config)
-        self.app.dark = not config.light_mode
+        # self.app.dark = not config.light_mode
+        self.app.theme = "rose-pine-dawn" if config.light_mode else "rose-pine"
 
     def action_reload(self) -> None:
         self.query_one(Viewer).reload()

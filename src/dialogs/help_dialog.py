@@ -9,7 +9,7 @@ from typing_extensions import Final
 
 from app import __version__
 
-HELP: Final[str] = f"""\
+HELP: Final[str] = f"""
 # Scientia Omnibus v{__version__} Help
 
 Scientia Omnibus — a terminal program for viewing your knowledge base.
@@ -116,12 +116,15 @@ Press `/` or click the omnibox, then type one of the commands:
 
 ## Knowledge Base Sync
 
-`Ctrl+G` opens a dialog to download or update knowledge repositories. Four repositories are available:
+`Ctrl+G` opens a dialog to download or update knowledge repositories. Two repositories are available:
 
-- **humanities-sciences**
+- **formal-sciences**
+- **survival and medicine**
+
+Comming soon:
 - **social-sciences**
 - **natural-sciences**
-- **formal-sciences**
+- **humanities-sciences**
 
 Select a repository and press `OK`. If the repository already exists locally, it will be
 force-synced — any local changes are overwritten with the remote version. If it does not
