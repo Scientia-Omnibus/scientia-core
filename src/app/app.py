@@ -13,7 +13,7 @@ class ScientiaCore(App[None]):
         self.dark = not load_config().light_mode
 
     def on_mount(self) -> None:
-        self.theme = "rose-pine"
+        self.theme = "rose-pine" if self.dark else "rose-pine-dawn"
         self.push_screen(Main())
 
 
