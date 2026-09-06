@@ -36,6 +36,7 @@ jobs:
             --collect-all textual \
             --collect-all markdown_it \
             --collect-all mdit_py_plugins
+        shell: bash
         working-directory: ${{ github.workspace }}
 
       

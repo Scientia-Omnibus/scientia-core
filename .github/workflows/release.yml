@@ -44,3 +44,40 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
+
+  build-windows:
+    needs: build-and-release
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Install PyInstaller
+        run: uv pip install pyinstaller
+
+      - name: Build .exe
+        run: |
+          uv run pyinstaller src/__main__.py \
+            --onefile --name scientia-core --console --icon assets/icon.ico \
+            --collect-all textual \
+            --collect-all markdown_it \
+            --collect-all mdit_py_plugins
+        shell: bash
+        working-directory: ${{ github.workspace }}
+
+      - name: Upload .exe to release
+        run: |
+          gh release upload ${{ github.event.release.tag_name }} "dist/scientia-core.exe#scientia-core-windows-x86_64.exe" --clobber
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
