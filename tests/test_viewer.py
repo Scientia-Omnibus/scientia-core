@@ -71,6 +71,7 @@ async def test_history_clear() -> None:
 
 async def test_viewer_has_markdown_widget() -> None:
     from textual.app import App, ComposeResult
+
     from widgets.viewer import Viewer
 
     class TestApp(App):
@@ -85,6 +86,7 @@ async def test_viewer_has_markdown_widget() -> None:
 
 async def test_viewer_back_forward() -> None:
     from textual.app import App, ComposeResult
+
     from widgets.viewer import Viewer
 
     class TestApp(App):

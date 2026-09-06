@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
-from functools import lru_cache
+from functools import cache
 from json import dumps, loads
 from pathlib import Path
 
@@ -33,7 +33,7 @@ def save_config(config: Config) -> Config:
     return load_config()
 
 
-@lru_cache(maxsize=None)
+@cache
 def load_config() -> Config:
     source_file = config_file()
     return (

@@ -5,12 +5,16 @@ on:
     types: [published]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
+
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -24,28 +28,28 @@ jobs:
       - name: Install PyInstaller
         run: uv pip install pyinstaller
 
+
       - name: Build .exe
         run: |
-          uv run pyinstaller src/__main__.py --onefile --name scientia-core --console --icon assets/icon.ico
+          uv run pyinstaller src/__main__.py \
+            --onefile --name scientia-core --console --icon assets/icon.ico \
+            --collect-all textual \
+            --collect-all markdown_it \
+            --collect-all mdit_py_plugins
         working-directory: ${{ github.workspace }}
 
+      
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: scientia-core-windows
           path: dist/scientia-core.exe
+          public: true
+
 
       - name: Upload to release
         if: github.event_name == 'release'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const { repo, owner } = context.repo;
-            const release_id = context.payload.release.id;
-            await github.rest.repos.uploadReleaseAsset({
-              owner, repo,
-              release_id,
-              name: 'scientia-core-windows-x86_64.exe',
-              data: fs.readFileSync('dist/scientia-core.exe'),
-            });
+        run: |
+          gh release upload ${{ github.event.release.tag_name }} "dist/scientia-core.exe#scientia-core-windows-x86_64.exe" --clobber
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

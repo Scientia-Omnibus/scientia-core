@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Generator
 from pathlib import Path
-from typing import Generator
 
 import pytest
 from pytest import MonkeyPatch
@@ -14,14 +14,14 @@ def _patch_dependencies(
     monkeypatch: MonkeyPatch, tmp_path: Path
 ) -> Generator[None, None, None]:
     import data
+    import data.bookmarks as bookmarks_data_mod
     import data.config as data_config
     import data.data_directory as data_dir_mod
-    import utils.update_utils as update_utils
-    import widgets.omnibox as omnibox_mod
-    import widgets.navigation as nav_mod
-    import screens.main as main_mod
-    import data.bookmarks as bookmarks_data_mod
     import data.history as history_data_mod
+    import screens.main as main_mod
+    import widgets.navigation as nav_mod
+    import widgets.omnibox as omnibox_mod
+    from utils import update_utils
 
     mock_config = Config()
 
@@ -41,7 +41,7 @@ def _patch_dependencies(
     monkeypatch.setattr(
         main_mod, "check_internet_connection", lambda: False, raising=False
     )
-    monkeypatch.setattr(main_mod, "compare_versions", lambda _a, _b: 0, raising=False)  # noqa: E731
+    monkeypatch.setattr(main_mod, "compare_versions", lambda _a, _b: 0, raising=False)
 
     def mock_save(_c: object) -> Config:
         return mock_config
@@ -51,8 +51,8 @@ def _patch_dependencies(
     monkeypatch.setattr(main_mod, "save_config", mock_save)
     monkeypatch.setattr(nav_mod, "save_config", mock_save)
 
-    monkeypatch.setattr(main_mod, "load_history", lambda: [])
-    monkeypatch.setattr(data, "load_history", lambda: [])
+    monkeypatch.setattr(main_mod, "load_history", list)
+    monkeypatch.setattr(data, "load_history", list)
 
     yield
 

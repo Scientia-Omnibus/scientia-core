@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import re
 from collections import deque
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
+from typing import Final
 
 from markdown_it import MarkdownIt
 from mdit_py_plugins import front_matter
@@ -17,7 +18,6 @@ from textual.message import Message
 from textual.reactive import var
 from textual.style import Style
 from textual.widgets import Markdown
-from typing_extensions import Final
 
 from app import __version__
 from dialogs.error import ErrorDialog

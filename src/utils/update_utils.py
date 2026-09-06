@@ -11,7 +11,7 @@ def check_internet_connection(host="8.8.8.8", port=53, timeout=3):
         socket.setdefaulttimeout(timeout)
         with socket.create_connection((host, port), timeout=timeout):
             return True
-    except socket.error:
+    except OSError:
         return False
 
 

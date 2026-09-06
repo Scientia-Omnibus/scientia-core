@@ -225,9 +225,7 @@ class Main(Screen[None]):
 
     def on_markdown_link_clicked(self, event: Markdown.LinkClicked) -> None:
         current_location = self.query_one(Viewer).location
-        if (local_file := Path(event.href)).exists():
-            self.visit(local_file)
-        elif (
+        if (local_file := Path(event.href)).exists() or (
             isinstance(current_location, Path)
             and (local_file := (current_location.parent / Path(event.href)))
             .absolute()

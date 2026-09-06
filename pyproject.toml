@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scientia-core"
-version = "0.2.2"
+version = "0.2.3"
 description = "Scientia Omnibus -- a knowledge base viewer"
 authors = [
     { name = "MarkLevkovich", email = "levmarkpost@gmail.com" }
@@ -34,12 +34,6 @@ dependencies = [
     "typing-extensions>=4.5",
     "xdg>=6,<7",
 ]
-
-[tool.pyinstaller]
-console = true
-onefile = true
-name = "scientia-core"
-icon = "assets/icon.ico"
 
 [project.urls]
 Homepage = "https://github.com/Scientia-Omnibus/scientia-core"

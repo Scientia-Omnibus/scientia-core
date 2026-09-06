@@ -1,6 +1,8 @@
+from importlib.metadata import version
+
 __author__ = "Scientia Omnibus"
 __email__ = "levmarkpost@gmail.com"
-__version__ = "0.2.2"
+__version__ = version("scientia-core")
 __licence__ = "MIT"
 
 

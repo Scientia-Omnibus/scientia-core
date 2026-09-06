@@ -1,17 +1,20 @@
 from __future__ import annotations
-import zipfile
+
 import asyncio
-from pathlib import Path
-import httpx
+import io
 import shutil
+import zipfile
+from pathlib import Path
+from typing import Self
+
+import httpx
 from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Vertical
 from textual.message import Message
 from textual.reactive import var
 from textual.widgets import TabbedContent, Tabs
-from typing_extensions import Self
-import io
+
 from data import load_config, save_config
 from data.data_directory import data_directory
 from dialogs.directory_picker import DirectoryPicker
@@ -219,13 +222,13 @@ class Navigation(Vertical, can_focus=True, can_focus_children=True):
 
     async def _download_knowledge(self, repo_name: str):
         full_path = f"https://github.com/Scientia-Omnibus/{repo_name}/archive/refs/heads/main.zip"
-        async with httpx.AsyncClient() as client:
-            async with client.stream(
-                "GET", full_path, follow_redirects=True
-            ) as response:
-                response.raise_for_status()
-                content = await response.aread()
-                await asyncio.to_thread(self._extract_zip, content)
+        async with (
+            httpx.AsyncClient() as client,
+            client.stream("GET", full_path, follow_redirects=True) as response,
+        ):
+            response.raise_for_status()
+            content = await response.aread()
+            await asyncio.to_thread(self._extract_zip, content)
 
     @staticmethod
     def _extract_zip(content: bytes):

@@ -1,7 +1,7 @@
-from abc import abstractmethod, ABC, ABCMeta
+from abc import ABC, ABCMeta, abstractmethod
+from typing import Self
 
 from textual.widgets import TabbedContent, TabPane
-from typing_extensions import Self
 
 
 class NavMeta(ABCMeta, type(TabPane)):
