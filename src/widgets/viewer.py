@@ -60,6 +60,9 @@ Old laptops, cheap single-board computers, you name it.
 ---
 
 > **Tip:** Press **`F1`** at any time to see all available commands.
+
+---
+read more at our [web-site](https://scientia-omnibus.vercel.app)
 """
 
 
