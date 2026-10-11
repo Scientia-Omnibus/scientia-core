@@ -132,11 +132,13 @@ class Main(Screen[None]):
         self.query_one(Navigation).jump_to_local_files(self._initial_location)
 
         if check_internet_connection():
-            match compare_versions(get_local_version(), await get_github_version()):
+            lc = get_local_version()
+            gh = await get_github_version()
+            match compare_versions(lc, gh):
                 case 1:
                     self.app.push_screen(
                         YesNoDialog(
-                            "New version available!",
+                            f"New version available: {lc} -> {gh}",
                             "Are you sure you want to update?\nafter the update, open the app again",
                         ),
                         self._on_update_response,

@@ -1,4 +1,6 @@
-# scientia-core
+<p align="center">
+  <img src="assets/preview.png" alt="KISS editor preview" width="900">
+</p>
 
 Offline terminal knowledge reader. Download Markdown knowledge packs once, read without internet. Built with [Textual](https://textual.textualize.io/). Built on the basis of [Frogmouth](https://github.com/Textualize/frogmouth).
 
